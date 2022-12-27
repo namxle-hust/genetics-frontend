@@ -1,0 +1,39 @@
+<div id="kt_login_wrapper" class="mt-20">
+	<!--begin::Login-->
+	<div
+		class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid"
+		id="kt_login"
+	>
+		<div
+			class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto"
+		>
+			<a routerLink="/" class="text-center mb-5"
+				><img
+					alt="Logo"
+					src="./assets/media/logos/varigenes.png"
+					class="h-100px"
+			/></a>
+
+            <div class="p-7 bg-white">
+                <div class="text-center mb-7">
+                    <h1>LOGIN</h1>
+                </div>
+                <!--begin::Content body-->
+                <div class="d-flex flex-center">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+			<!--end::Content body-->
+
+			<!--begin::Content footer-->
+			<!-- <div class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0">
+        <a href="#" class="text-primary font-weight-bolder font-size-h5">Terms</a>
+        <a href="#" class="text-primary ml-10 font-weight-bolder font-size-h5">Plans</a>
+        <a href="#" class="text-primary ml-10 font-weight-bolder font-size-h5">Contact Us</a>
+      </div> -->
+			<!--end::Content footer-->
+		</div>
+		<!--end::Content-->
+	</div>
+	<!--end::Login-->
+</div>

@@ -1,0 +1,142 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<div class="modal-title h4" id="example-modal-sizes-title-lg">
+			<div *ngIf="id; else create">
+				<span>Edit Batch</span>
+			</div>
+			<ng-template #create>
+				<span> Create Batch</span>
+			</ng-template>
+		</div>
+	</div>
+	<div class="cursor-default modal-body overflow-auto" style="min-height: 400px; max-height: 550px;">
+		<ng-container *ngIf="isLoading$ | async">
+			<div class="overlay-layer bg-transparent">
+				<div class="spinner spinner-lg spinner-success"></div>
+			</div>
+		</ng-container>
+
+		<ng-container *ngIf="formGroup">
+			<form
+				action="#"
+				class="form form-label-right"
+				[formGroup]="formGroup"
+				autocomplete="off"
+			>
+				<div class="form-group row">
+					<div class="col-lg-6">
+						<label class="form-label required">Enter Batch Name</label>
+						<input
+							type="text"
+							class="form-control form-control-lg form-control-solid"
+							name="name"
+							placeholder="Name"
+							autocomplete="off"
+							[class.is-invalid]="isControlInvalid('name')"
+							[class.is-valid]="isControlValid('name')"
+							formControlName="name"
+						/>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('name')"
+						>
+							Batch Name was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'name')"
+						>
+							Batch Name is required
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('maxLength', 'name')"
+						>
+							Batch Name should have maximum 100 symbols
+						</div>
+					</div>
+					<div *ngIf="!id; else sampleTypeEdit" class="col-lg-6">
+						<label class="form-label required">Select Sample Type</label>
+						<select
+							class="form-control form-control-lg form-control-solid"
+							name="type"
+							[class.is-invalid]="isControlInvalid('type')"
+							[class.is-valid]="isControlValid('type')"
+							formControlName="type"
+                            (change)="onSampleTypeChange()"
+						>
+							<option
+								*ngFor="let type of sampleTypes"
+								[value]="type.value"
+							>
+								{{ type.name }}
+							</option>
+						</select>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('type')"
+						>
+							Sample Type was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'type')"
+						>
+							Sample Type is required
+						</div>
+					</div>
+
+					<ng-template #sampleTypeEdit>
+						<div class="col-lg-6">
+							<label class="form-label required">Sample Type</label>
+							<input
+								type="text"
+								disabled
+								class="form-control form-control-lg form-control-solid"
+								name="name"
+								value="{{
+									batchFile.type | sampleTypeConverter
+								}}"
+							/>
+						</div>
+					</ng-template>
+				</div>
+				<div *ngIf="SelectedSampleType" class="form-group row mt-10">
+					<hr>
+					<div class="col-lg-12 mt-10">
+						<label class="form-label mb-5"
+							>Upload {{ SelectedSampleType }} files (Optional)</label
+						>
+                        
+						<app-upload
+                            [isRequired]="false"
+							[sampleType]="SelectedSampleType"
+						></app-upload>
+					</div>
+				</div>
+			</form>
+		</ng-container>
+	</div>
+	<div class="modal-footer">
+		<button
+			type="button"
+			class="btn btn-light btn-elevate mr-2"
+			(click)="modal.dismiss()"
+		>
+			Cancel
+		</button>
+		<ng-container>
+			<button
+				type="submit"
+				class="btn btn-primary btn-elevate"
+				(click)="save()"
+				[disabled]="(!formGroup || formGroup.invalid)"
+			>
+				Save
+			</button>
+		</ng-container>
+		<!-- <ng-container *ngIf="isLoading">
+			<span class="spinner spinner-primary ml-3 mr-5"></span>
+		</ng-container> -->
+	</div>
+</div>

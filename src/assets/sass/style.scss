@@ -1,0 +1,17 @@
+//
+// Theme style
+@import "./assets/media/plugins/keenthemes-icons/font/ki.css";
+//
+
+// Initialize
+@import "init";
+
+// Components
+@import "./core/components/components";
+@import "components/components";
+
+// Layout
+@import "layout/layout";
+
+
+@import 'ngx-toastr/toastr';

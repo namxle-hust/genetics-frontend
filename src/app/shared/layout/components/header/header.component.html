@@ -1,0 +1,25 @@
+<div
+	[ngClass]="headerContainerCssClasses"
+	class="d-flex align-items-center justify-content-between"
+	id="kt_header_container"
+>
+	<div class="d-flex align-items-start">
+		<a routerLink="/workspace" class="d-flex me-5">
+			<img
+				alt="Logo"
+				src="./assets/media/logos/varigenes.png"
+                height="70px"
+			/>
+		</a>
+	</div>
+
+	<app-header-menu
+		#ktHeaderMenu
+		id="kt_header_menu"
+		class="header-menu header-menu-mobile"
+		[ngClass]="headerMenuCSSClasses"
+	></app-header-menu>
+
+	<!-- end::Wrapper -->
+	<app-topbar class="d-flex flex-shrink-0"></app-topbar>
+</div>

@@ -1,0 +1,113 @@
+<div class="container">
+	<div class="mb-10" appDnd (fileDropped)="onFileDropped($event)">
+		<input
+			[multiple]="maximumFileUpload > 1"
+			type="file"
+			#fileDropRef
+			id="fileDropRef"
+			(change)="fileBrowseHandler($event)"
+		/>
+		<img
+			class="mb-4 upload-img"
+			src="assets/media/svg/files/ic-upload-file.svg"
+			alt=""
+		/>
+		<h6 class="title">
+			Click or drag {{ sampleType }} files to this area to upload
+		</h6>
+        <ng-template #vcfTitle>
+            <h6 class="text-muted">
+                You can upload 1 VCF file
+            </h6>
+        </ng-template>
+        <h6 *ngIf="sampleType == FILE_UPLOAD_TYPE.FASTQ; else vcfTitle" class="text-warning">
+            FastQ sample requires R1 and R2 files
+        </h6>
+	</div>
+
+	<div [hidden]="fileList.length == 0" class="form-group row">
+		<div class="col-lg-12">
+			<div class="files-list">
+				<div
+					*ngFor="let data of fileList; let i = index"
+					style="position: relative; padding-bottom: 3px"
+				>
+					<div class="single-file" style="width: 100%">
+						<img
+							src="assets/media/svg/files/ic-file.svg"
+							width="50px"
+							alt="file"
+							class="pr-4 pe-4"
+						/>
+						<div class="info">
+							<p class="size mb-1">
+								{{ data.file.size | formatBytes }}
+							</p>
+							<h6 class="name">
+								{{ data.file.name }}
+							</h6>
+                            <div *ngIf="data.status != FILE_UPLOAD_STATUS.DONE" class="mt-2" style="display: flex;">
+                                <div
+                                    class="progress-cont"
+                                >
+                                    <div
+                                        class="progress"
+                                        [style.width]="data.progress + '%'"
+                                    ></div>
+                                </div>
+                                <img
+                                    class="progress"
+                                    src="assets/media/svg/files/rolling.svg"
+                                    width="20px"
+                                    *ngIf="
+                                        data.status ==
+                                        FILE_UPLOAD_STATUS.PROGRESSING
+                                    "
+                                />
+                            </div>
+							<div class="upload-status mt-1">
+								<span>
+									{{ data.status | uploadFileStatusPipe }}
+								</span>
+								<span
+									*ngIf="
+										data.status ==
+										FILE_UPLOAD_STATUS.PROGRESSING
+									"
+								>
+									{{ data.progress }}%
+								</span>
+							</div>
+						</div>
+						<!-- <span
+							*ngIf="
+								file.checked || !file.progress_status
+							"
+							(click)="deleteFile(i)"
+							[inlineSVG]="
+								'./assets/media/svg/icons/Navigation/Remove.svg'
+							"
+							cacheSVG="true"
+							class="svg-icon svg-icon-md svg-icon-danger"
+						></span>-->
+						<!-- <img
+							src="assets/media/svg/files/ic-delete-file.svg"
+							class="delete"
+							width="20px"
+							alt="file"
+							
+						/>  -->
+						<span
+							class="svg-icon cursor-pointer delete svg-icon-danger"
+							[cacheSVG]="true"
+							(click)="deleteFile(data.id)"
+							[inlineSVG]="
+								'./assets/media/icons/duotune/arrows/arr011.svg'
+							"
+						></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

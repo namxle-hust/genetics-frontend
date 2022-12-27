@@ -1,0 +1,233 @@
+<div class="card card-xxl-stretch mb-5 mb-xl-8">
+	<!-- begin::Header -->
+
+	<div class="card-header border-0 pt-5">
+		<h3 class="card-title align-items-start flex-column">
+			<span class="card-label fw-bolder fs-3 mb-1">Your Batch Files</span>
+		</h3>
+		<div
+			class="card-toolbar"
+			data-bs-toggle="tooltip"
+			data-bs-placement="top"
+			data-bs-trigger="hover"
+			title="Click to add a user"
+		>
+			<a href="javascript:void(0)" (click)="create()" class="btn btn-sm btn-primary">
+				<span
+					[inlineSVG]="
+						'./assets/media/icons/duotune/arrows/arr075.svg'
+					"
+					class="svg-icon svg-icon-3"
+				></span>
+				Create Batch Files
+			</a>
+		</div>
+	</div>
+	<!-- end::Header -->
+	<!-- begin::Body -->
+	<div class="card-body py-3">
+		<div class="form form-label-right mb-5">
+			<div class="form-group row">
+				<div class="col-lg-3" [formGroup]="searchGroup">
+					<input
+						type="text"
+						class="form-control form-control-sm"
+						name="searchText"
+						placeholder="Search batch files"
+						value=""
+						formControlName="searchTerm"
+					/>
+				</div>
+			</div>
+		</div>
+		<ng-container *ngIf="grouping.getSelectedRowsCount()">
+			<div class="form mb-5">
+				<div
+					class="row align-items-center form-group-actions margin-top-20 margin-bottom-20"
+				>
+					<div class="col-xl-12">
+						<div class="form-group form-group-inline">
+							<div class="form-label form-label-no-wrap">
+								<label class="font-bold font-danger"
+									><span
+										>Selected records count:
+										<b>{{
+											grouping.getSelectedRowsCount()
+										}}</b></span
+									></label
+								>
+							</div>
+							<div>
+								<button
+									type="button"
+									class="btn btn-sm btn-danger font-weight-bolder font-size-sm mr-1"
+									(click)="deleteSelected()"
+								>
+									<i class="fa fa-trash"></i> Delete Selected</button
+								>&nbsp;
+								<!-- <button
+									type="button"
+									class="btn btn-sm btn-light-primary font-weight-bolder font-size-sm mr-1"
+									(click)="shareWorkspace()"
+								>
+									<i class="fa fa-share-alt"></i> Share
+									Workspace
+								</button> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+		<!-- begin::Table container -->
+		<div class="table-responsive">
+			<!-- begin::Table -->
+			<table
+				class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+			>
+				<!-- begin::Table head -->
+				<thead>
+					<tr class="fw-bolder text-muted">
+						<th class="w-25px">
+							<div
+								class="form-check form-check-sm form-check-custom form-check-solid"
+							>
+								<input
+									class="form-check-input"
+									type="checkbox"
+									(click)="grouping.selectAllRows()"
+									[checked]="
+										grouping.checkAreAllRowsSelected()
+									"
+								/>
+							</div>
+						</th>
+						<th class="min-w-150px">
+							Name
+							<app-sort-icon
+								column="name"
+								class="mr-3"
+								[activeColumn]="sorting.column"
+								[activeDirection]="sorting.direction"
+								(sort)="sort($event)"
+							></app-sort-icon>
+						</th>
+						<th class="min-w-150px">
+							Type
+						</th>
+						<th class="min-w-140px">
+							Date Created
+							<app-sort-icon
+								column="createdAt"
+								class="mr-3"
+								[activeColumn]="sorting.column"
+								[activeDirection]="sorting.direction"
+								(sort)="sort($event)"
+							></app-sort-icon>
+						</th>
+						<th class="min-w-120px">
+							Date Updated
+							<app-sort-icon
+								column="updatedAt"
+								class="mr-3"
+								[activeColumn]="sorting.column"
+								[activeDirection]="sorting.direction"
+								(sort)="sort($event)"
+							></app-sort-icon>
+						</th>
+						<th class="min-w-100px">Actions</th>
+					</tr>
+				</thead>
+				<!-- end::Table head -->
+				<!-- begin::Table body -->
+				<tbody>
+					<tr
+						*ngFor="
+							let batch of batchService.items$ | async
+						"
+					>
+						<td>
+							<div
+								class="form-check form-check-sm form-check-custom form-check-solid"
+							>
+								<input
+									class="form-check-input widget-9-check"
+									type="checkbox"
+									(click)="grouping.selectRow(batch.id)"
+									[checked]="
+										grouping.isRowSelected(batch.id)
+									"
+								/>
+							</div>
+						</td>
+						<td>
+							<a
+								class="batch-name"
+								href="javascript:void(0)"
+								>{{ batch.name }}</a
+							>
+						</td>
+                        <td>
+                            {{ batch.type | sampleTypeConverter }}
+                        </td>
+						<td>
+							{{ batch.createdAt }}
+						</td>
+						<td>
+							{{ batch.updatedAt }}
+						</td>
+						<td>
+							<div class="d-flex flex-shrink-0">
+								<a
+									href="javascript:void(0)"
+									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+								>
+									<span
+										[inlineSVG]="
+											'./assets/media/icons/duotune/general/gen019.svg'
+										"
+										class="svg-icon svg-icon-3"
+									></span>
+								</a>
+								<a
+									href="javascript:void(0)"
+									(click)="edit(batch.id)"
+									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+								>
+									<span
+										[inlineSVG]="
+											'./assets/media/icons/duotune/art/art005.svg'
+										"
+										class="svg-icon svg-icon-3"
+									></span>
+								</a>
+								<a
+									href="#"
+									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+								>
+									<span
+										[inlineSVG]="
+											'./assets/media/icons/duotune/general/gen027.svg'
+										"
+										class="svg-icon svg-icon-3"
+									></span>
+								</a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<!-- end::Table body -->
+			</table>
+			<!-- end::Table -->
+		</div>
+		<!-- end::Table container -->
+
+		<app-paginator
+			class="d-flex justify-content-between align-items-center flex-wrap"
+			[paginator]="paginator"
+			[isLoading]="isLoading"
+			(paginate)="paginate($event)"
+		></app-paginator>
+	</div>
+	<!-- begin::Body -->
+</div>

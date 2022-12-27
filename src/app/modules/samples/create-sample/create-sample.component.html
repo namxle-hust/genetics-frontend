@@ -1,0 +1,289 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<div class="modal-title h4" id="example-modal-sizes-title-lg">
+			<div *ngIf="id; else create">
+				<span>Edit Sample</span>
+			</div>
+			<ng-template #create>
+				<span> Create Sample</span>
+			</ng-template>
+		</div>
+	</div>
+	<div
+		class="cursor-default modal-body overflow-auto"
+		style="min-height: 400px; max-height: 550px"
+	>
+		<ng-container *ngIf="isLoading$ | async">
+			<div class="overlay-layer bg-transparent">
+				<div class="spinner spinner-lg spinner-success"></div>
+			</div>
+		</ng-container>
+
+		<ng-container *ngIf="formGroup">
+			<form
+				action="#"
+				class="form form-label-right"
+				[formGroup]="formGroup"
+				autocomplete="off"
+			>
+				<div class="form-group row">
+					<div class="col-lg-6">
+						<label class="form-label required"
+							>Enter Sample Name</label
+						>
+						<input
+							type="text"
+							class="form-control form-control-lg form-control-solid"
+							name="name"
+							placeholder="Name"
+							autocomplete="off"
+							[class.is-invalid]="isControlInvalid('name')"
+							[class.is-valid]="isControlValid('name')"
+							formControlName="name"
+						/>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('name')"
+						>
+							Sample Name was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'name')"
+						>
+							Sample Name is required
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('maxLength', 'name')"
+						>
+							Sample Name should have maximum 100 symbols
+						</div>
+					</div>
+
+					<div class="col-lg-6" *ngIf="!id;">
+						<label class="form-label required"
+							>Select Vcf Type</label
+						>
+						<select
+							class="form-control form-control-lg form-control-solid"
+							name="vcfType"
+							[class.is-invalid]="isControlInvalid('vcfType')"
+							[class.is-valid]="isControlValid('vcfType')"
+							formControlName="vcfType"
+						>
+							<option
+								*ngFor="let vcfType of vcfTypes"
+								[value]="vcfType.value"
+							>
+								{{ vcfType.name }}
+							</option>
+						</select>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('vcfType')"
+						>
+							Vcf Type was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'vcfType')"
+						>
+							Vcf Type is required
+						</div>
+					</div>
+
+					<ng-template #sampleTypeEdit>
+						<div class="col-lg-6">
+							<label class="form-label">Vcf Type</label>
+							<input
+								type="text"
+								class="form-control  form-control-md"
+								name="name"
+								value="{{ sample.vcfType | vcfTypeConverter }}"
+							disabled/>
+						</div>
+					</ng-template>
+				</div>
+				<div *ngIf="!id;" class="form-group row mt-10">
+					<div class="col-lg-6" >
+						<label class="form-label required"
+							>Select Workspace</label
+						>
+						<select
+							class="form-control form-control-lg form-control-solid"
+							name="workspace"
+							[class.is-invalid]="isControlInvalid('workspace')"
+							[class.is-valid]="isControlValid('workspace')"
+							formControlName="workspace"
+						>
+							<option
+								*ngFor="let workspace of workspaces"
+								[value]="workspace.id"
+							>
+								{{ workspace.name }}
+							</option>
+						</select>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('workspace')"
+						>
+							Workspace was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'workspace')"
+						>
+							Workspace is required
+						</div>
+					</div>
+					<ng-template #workspaceEdit>
+						<div class="col-lg-6">
+							<label class="form-label">Workspace</label>
+							<input
+								type="text"
+								class="form-control  form-control-md"
+								name="name"
+								value="{{ sample.workspace?.name }}"
+							disabled/>
+						</div>
+					</ng-template>
+					<div class="col-lg-6" *ngIf="!id;">
+						<label class="form-label">Select Batch</label>
+						<select
+							class="form-control form-control-lg form-control-solid"
+							name="batch"
+							[class.is-invalid]="isControlInvalid('batch')"
+							[class.is-valid]="isControlValid('batch')"
+							formControlName="batch"
+						>
+							<option
+								*ngFor="let batch of batches"
+								[value]="batch.id"
+							>
+								{{ batch.name }}
+							</option>
+						</select>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('batch')"
+						>
+							Batch was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'batch')"
+						>
+							Batch is required
+						</div>
+					</div>
+					<ng-template #batchEdit>
+						<div class="col-lg-6">
+							<label class="form-label">Batch</label>
+							<input
+								type="text"
+								class="form-control  form-control-md"
+								name="name"
+								value="{{ sample.batch?.name }}"
+							disabled/>
+						</div>
+					</ng-template>
+				</div>
+				<div *ngIf="!id;" class="form-group row mt-10">
+					<div class="col-lg-6" >
+						<label class="form-label required"
+							>Select Gender</label
+						>
+						<select
+							class="form-control form-control-lg form-control-solid"
+							name="gender"
+							[class.is-invalid]="isControlInvalid('gender')"
+							[class.is-valid]="isControlValid('gender')"
+							formControlName="gender"
+						>
+							<option
+								*ngFor="let gender of genders"
+								[value]="gender.value"
+							>
+								{{ gender.name }}
+							</option>
+						</select>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('gender')"
+						>
+							Gender was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'gender')"
+						>
+							Gender is required
+						</div>
+					</div>
+					<ng-template #genderEdit>
+						<div class="col-lg-6">
+							<label class="form-label">Gender</label>
+							<input
+								type="text"
+								class="form-control form-control-md not-allowed"
+								name="name"
+								value="{{ sample.gender }}"
+							disabled/>
+						</div>
+					</ng-template>
+				</div>
+				<div class="form-group row mt-10">
+					<div class="col-lg-12">
+						<label class="form-label">Description</label>
+						<textarea
+							name="description"
+							[class.is-invalid]="isControlInvalid('description')"
+							[class.is-valid]="isControlValid('description')"
+							formControlName="description"
+							id=""
+							cols="30"
+							rows="3"
+							class="form-control form-control-lg form-control-solid"
+						>
+						</textarea>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('description')"
+						>
+							Description was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('maxLength', 'description')"
+						>
+							Maximum Length is 1000
+						</div>
+					</div>
+				</div>
+			</form>
+		</ng-container>
+	</div>
+	<div class="modal-footer">
+		<button
+			type="button"
+			class="btn btn-light btn-elevate mr-2"
+			(click)="modal.dismiss()"
+		>
+			Cancel
+		</button>
+		<ng-container>
+			<button
+				type="submit"
+				class="btn btn-primary btn-elevate"
+				(click)="save()"
+				[disabled]="!formGroup || formGroup.invalid"
+			>
+				Save
+			</button>
+		</ng-container>
+		<!-- <ng-container *ngIf="isLoading">
+			<span class="spinner spinner-primary ml-3 mr-5"></span>
+		</ng-container> -->
+	</div>
+</div>
