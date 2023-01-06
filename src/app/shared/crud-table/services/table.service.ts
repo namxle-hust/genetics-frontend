@@ -6,7 +6,7 @@ import { PaginatorState } from '../models/paginator.model';
 import { ITableState, TableResponseModel } from '../models/table.model';
 import { BaseModel } from '../models/base.model';
 import { SortState } from '../models/sort.model';
-import { GroupingState } from '../models/grouping.model';
+import { GroupingIdType, GroupingState } from '../models/grouping.model';
 import { ApiService } from 'src/app/core/services/api.service';
 
 const DEFAULT_STATE: ITableState = {
@@ -61,7 +61,10 @@ export abstract class TableService<T> {
     }
     protected endpoint: string;
 
-    constructor(endpoint: string, protected apiService: ApiService) {
+    constructor(endpoint: string, protected apiService: ApiService, tableState?: ITableState) {
+        if (tableState) {
+            this._tableState$ = new BehaviorSubject<ITableState>(tableState);
+        }
         this.endpoint = endpoint
         this.endpoint = `${endpoint}`
     }
@@ -100,7 +103,7 @@ export abstract class TableService<T> {
         );
     }
 
-    getItemById(id: number): Observable<T> {
+    getItemById(id: GroupingIdType): Observable<T> {
         this._isLoading$.next(true);
         this._errorMessage.next('');
         const path = `${this.endpoint}/${id}`;
@@ -136,7 +139,7 @@ export abstract class TableService<T> {
     }
 
     // UPDATE Status
-    updateStatusForItems(ids: number[], status: number): Observable<any> {
+    updateStatusForItems(ids: GroupingIdType[], status: number): Observable<any> {
         this._isLoading$.next(true);
         this._errorMessage.next('');
         const body = { ids, status };
@@ -167,7 +170,7 @@ export abstract class TableService<T> {
     }
 
     // delete list of items
-    deleteItems(ids: number[] = []): Observable<any> {
+    deleteItems(ids: GroupingIdType[] = []): Observable<any> {
         this._isLoading$.next(true);
         this._errorMessage.next('');
         const path = this.endpoint + '/deleteItems';

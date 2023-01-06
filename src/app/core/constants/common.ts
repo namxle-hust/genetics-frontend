@@ -1,4 +1,4 @@
-import { FileUploadStatusEnum, GenderEnum, RoleEnum, SampleStatusEnum, SampleTypeEnum, VcfTypeEnum } from "./enum"
+import { FileUploadStatusEnum, GenderEnum, RoleEnum, SampleStatusEnum, SampleTypeEnum, VcfTypeEnum } from "../config/enum"
 
 export const ROLES = [
     {

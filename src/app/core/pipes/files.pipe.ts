@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FileUploadStatusEnum, UPLOAD_FILES_STATUS } from '../config';
+import { FileUploadStatusEnum } from '../config';
+import { UPLOAD_FILES_STATUS } from '../constants';
 
 
 @Pipe({

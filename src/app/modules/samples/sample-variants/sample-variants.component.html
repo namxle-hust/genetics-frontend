@@ -1,0 +1,32 @@
+<div class="main-wrapper">
+	<div
+		#filterWrapper
+		[ngStyle]="{ width: asideState ? '20%' : '0' }"
+		class="filter-wrapper"
+	>
+		<app-variant-filter
+			class="filter"
+			[asideState]="asideState"
+			(toggleEvent)="toggleAside()"
+            (applyFilter)="applyFilter($event)"
+		></app-variant-filter>
+	</div>
+	<div
+		#variantListContainer
+		[ngStyle]="{ width: asideState ? '80%' : '100%' }"
+		class="content-wrapper"
+	>
+		<app-variant-list
+			[sorting]="sorting"
+			[grouping]="grouping"
+			(sortEvent)="sort($event)"
+		></app-variant-list>
+
+		<app-paginator
+			class="mt-5 d-flex justify-content-between align-items-center flex-wrap"
+			[paginator]="paginator"
+			[isLoading]="isLoading"
+			(paginate)="paginate($event)"
+		></app-paginator>
+	</div>
+</div>

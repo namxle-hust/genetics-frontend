@@ -1,0 +1,75 @@
+.filter-header {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.filter-header-subscript {
+	align-items: center;
+	display: flex;
+}
+
+.filter-body {
+    overflow-y: auto;
+	width: 100%;
+    overflow-x: hidden;
+    // height: 320px;
+    padding: 0px 15px;
+}
+
+.filter-object {
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	text-align: center;
+}
+
+.header-main {
+	margin-bottom: 0.5rem;
+	margin-top: 0.5rem;
+	align-items: center;
+	display: flex;
+	font-weight: bold;
+	justify-content: space-between;
+	text-align: start;
+}
+
+.filter-header {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+}
+
+.filter-header h5 {
+	// padding-left: 1rem;
+	color: #495057;
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: 0;
+}
+
+.filter-header-subscript {
+	align-items: center;
+	display: flex;
+}
+
+.filter-header-subscript > div:first-child {
+	padding-right: 0.5rem;
+	cursor: pointer;
+	font-size: 0.8rem;
+	text-decoration: underline;
+}
+
+.custom-aside-btn {
+	position: absolute;
+	right: -15px;
+	top: 10px;
+	z-index: 10;
+}
+
+.filter-footer {
+    padding: 0px 10px 10px 10px
+}
+

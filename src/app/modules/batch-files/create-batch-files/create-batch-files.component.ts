@@ -5,7 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { BatchModel, FileCreate, FileCreateType } from 'src/app/core/models';
 import { BatchService, UploadService } from 'src/app/core/services';
-import { SampleTypeEnum, SAMPLE_TYPES } from 'src/app/core/config';
+import { SampleTypeEnum } from 'src/app/core/config';
+import { SAMPLE_TYPES } from 'src/app/core/constants';
 import { lengthArray, minLengthArray } from 'src/app/core/validators';
 
 @Component({

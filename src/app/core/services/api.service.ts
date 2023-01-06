@@ -17,6 +17,7 @@ import { LocalStorageService } from "./localstorage.service";
 })
 export class ApiService {
     private apiUrl = environment.apiUrl;
+    private timeOut = 80000
     private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
     constructor(private http: HttpClient, private localstorageService: LocalStorageService) {
@@ -30,7 +31,7 @@ export class ApiService {
         };
 
         return this.http.get<T>(url, options).pipe(
-            timeout(10000),
+            timeout(this.timeOut),
             map((res: any) => {
                 return res;
             }),
@@ -56,7 +57,7 @@ export class ApiService {
         let paramsRq = { ...params };
 
         return this.http.post<T>(url, paramsRq, options).pipe(
-            timeout(10000),
+            timeout(this.timeOut),
             map((res: any) => {
                 return res;
             }),
@@ -80,7 +81,7 @@ export class ApiService {
         };
 
         return this.http.delete<T>(url, options).pipe(
-            timeout(10000),
+            timeout(this.timeOut),
             map((res: any) => {
                 return res;
             }),

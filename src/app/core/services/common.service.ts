@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
-import { MAXIMUM_UPLOAD_FILES, SampleTypeEnum, SAMPLE_TYPES } from "../config";
+import { Select2OptionData } from "ng-select2";
+import { SampleTypeEnum,  } from "../config";
+import { SAMPLE_TYPES, MAXIMUM_UPLOAD_FILES } from "../constants";
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
@@ -17,5 +19,14 @@ export class CommonService {
             result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
         }
         return result;
+    }
+
+    formatSelect2Data(data: any[]): Select2OptionData[] {
+        return data.map((element) =>  { 
+            return {
+                id: element,
+                text: element
+            } 
+        })
     }
 }

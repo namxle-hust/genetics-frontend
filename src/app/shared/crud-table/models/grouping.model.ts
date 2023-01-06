@@ -1,19 +1,21 @@
+export type GroupingIdType = number | string;
+
 export interface IGroupingState {
-    selectedRowIds: Set<number>;
-    itemIds: number[];
+    selectedRowIds: Set<GroupingIdType | string>;
+    itemIds: GroupingIdType[];
     checkAreAllRowsSelected(): boolean;
-    selectRow(id: number): IGroupingState;
+    selectRow(id: GroupingIdType): IGroupingState;
     // tslint:disable-next-line:variable-name
-    clearRows(_itemIds: number[]): IGroupingState;
-    isRowSelected(id: number): boolean;
+    clearRows(_itemIds: GroupingIdType[]): IGroupingState;
+    isRowSelected(id: GroupingIdType): boolean;
     selectAllRows(): IGroupingState;
-    getSelectedRows(): number[];
-    getSelectedRowsCount(): number;
+    getSelectedRows(): GroupingIdType[];
+    getSelectedRowsCount(): GroupingIdType;
 }
 
 export class GroupingState implements IGroupingState {
-    selectedRowIds: Set<number> = new Set<number>();
-    itemIds: number[] = [];
+    selectedRowIds: Set<GroupingIdType> = new Set<GroupingIdType>();
+    itemIds: GroupingIdType[] = [];
 
 
     checkAreAllRowsSelected(): boolean {
@@ -24,7 +26,7 @@ export class GroupingState implements IGroupingState {
         return this.selectedRowIds.size === this.itemIds.length;
     }
 
-    selectRow(id: number): GroupingState {
+    selectRow(id: GroupingIdType): GroupingState {
         if (this.selectedRowIds.has(id)) {
             this.selectedRowIds.delete(id);
         } else {
@@ -34,32 +36,32 @@ export class GroupingState implements IGroupingState {
     }
 
     // tslint:disable-next-line:variable-name
-    clearRows(_itemIds: number[]): GroupingState {
+    clearRows(_itemIds: GroupingIdType[]): GroupingState {
         this.itemIds = _itemIds;
-        this.selectedRowIds = new Set<number>();
+        this.selectedRowIds = new Set<GroupingIdType>();
         return this;
     }
 
-    isRowSelected(id: number): boolean {
+    isRowSelected(id: GroupingIdType): boolean {
         return this.selectedRowIds.has(id);
     }
 
     selectAllRows(): GroupingState {
         const areAllSelected = this.itemIds.length === this.selectedRowIds.size;
         if (areAllSelected) {
-            this.selectedRowIds = new Set<number>();
+            this.selectedRowIds = new Set<GroupingIdType>();
         } else {
-            this.selectedRowIds = new Set<number>();
+            this.selectedRowIds = new Set<GroupingIdType>();
             this.itemIds.forEach(id => this.selectedRowIds.add(id));
         }
         return this;
     }
 
-    getSelectedRows(): number[] {
+    getSelectedRows(): GroupingIdType[] {
         return Array.from(this.selectedRowIds);
     }
 
-    getSelectedRowsCount(): number {
+    getSelectedRowsCount(): GroupingIdType {
         return this.selectedRowIds.size;
     }
 }

@@ -1,0 +1,30 @@
+.main-wrapper {
+	display: flex;
+}
+
+.filter {
+	transition: all 0.3s;
+}
+
+.toggle-btn {
+	right: -8px;
+	top: 6px;
+}
+
+.content-wrapper {
+	width: 80%;
+	transition: transform 0.8s ease;
+}
+
+.filter-wrapper {
+	position: relative;
+	border-radius: 5px;
+	border: 1px solid #dee2e6;
+	flex-direction: row;
+	width: 20%;
+	background-color: #fff;
+	margin-right: 10px;
+	height: 100%;
+	transition: ease;
+	z-index: 999;
+}

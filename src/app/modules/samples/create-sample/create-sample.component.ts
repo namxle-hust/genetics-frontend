@@ -5,8 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { BatchModel, SampleModel, WorkspaceModel } from 'src/app/core/models';
 import { BatchService, SampleService, WorkspaceService } from 'src/app/core/services';
-import { GenderEnum, GENDERS, VcfTypeEnum, VCF_TYPES } from 'src/app/core/config';
-
+import { GenderEnum, VcfTypeEnum,  } from 'src/app/core/config';
+import { VCF_TYPES, GENDERS } from 'src/app/core/constants';
+ 
 @Component({
     selector: 'app-create-sample',
     templateUrl: './create-sample.component.html',

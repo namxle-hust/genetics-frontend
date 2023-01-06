@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SampleStatusEnum, SAMPLE_STATUSES, VcfTypeEnum, VCF_TYPES } from '../config';
+import { SampleStatusEnum, VcfTypeEnum } from '../config';
+import { SAMPLE_STATUSES, VCF_TYPES } from '../constants';
 
 
 @Pipe({

@@ -13,6 +13,10 @@ export class PaginatorState implements IPaginatorState {
     total = 0;
     pageSizes: number[] = [];
 
+    constructor(pageSize? : number) {
+        this.pageSize = pageSize ? pageSize : PageSizes[0];
+    }
+
     recalculatePaginator(total: number): PaginatorState {
         this.total = total;
         return this;

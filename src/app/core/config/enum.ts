@@ -40,3 +40,8 @@ export enum UploadStatusEnum {
     BUSY = 'BUSY',
     FREE = 'FREE'
 }
+
+export enum ComparisonOperator {
+    GREATER = 'greater',
+    LOWER = 'lower'
+}

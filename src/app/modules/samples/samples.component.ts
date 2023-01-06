@@ -42,8 +42,7 @@ export class SamplesComponent implements
     ISortView,
     IFilterView,
     IGroupingView,
-    ISearchView,
-    IFilterView {
+    ISearchView {
 
     paginator: PaginatorState;
     sorting: SortState;

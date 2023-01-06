@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SampleTypeEnum, SAMPLE_TYPES } from '../config';
-
+import { SampleTypeEnum } from '../config';
+import { SAMPLE_TYPES } from '../constants';
 
 @Pipe({
     name: 'sampleTypeConverter'
