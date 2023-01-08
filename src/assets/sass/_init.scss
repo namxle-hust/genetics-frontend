@@ -21,7 +21,9 @@
 @import "bootstrap/scss/utilities";
 
 // 3rd-Party plugins variables
+@import 'ngx-toastr/toastr';
 @import "./core/vendors/plugins/variables";
+@import "./core/vendors/plugins/toastr";
 
 // Custom layout variables
 @import "layout/variables";

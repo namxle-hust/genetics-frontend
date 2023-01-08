@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { FileCreateType, FileUploadType, IAWSCredential, IFileUpload } from '../models';
 import { FileUploadStatusEnum, UploadStatusEnum } from '../config';
 import { ApiService } from './api.service';
+import { S3_UPLOAD_FOLDER } from '../constants';
 
 const path = 'file'
 
@@ -99,7 +100,7 @@ export class UploadService implements OnDestroy  {
                 params: {
                     Body: fileData,
                     Bucket: 'varigenes-storage',
-                    Key: fileData.name
+                    Key: `${S3_UPLOAD_FOLDER}/${fileData.name}`
                 },
                 queueSize: 4, // optional concurrency configuration
                 partSize: 1024 * 1024 * 5, // optional size of each part, in bytes, at least 5MB

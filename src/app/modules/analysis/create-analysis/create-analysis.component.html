@@ -2,10 +2,10 @@
 	<div class="modal-header">
 		<div class="modal-title h4" id="example-modal-sizes-title-lg">
 			<div *ngIf="id; else create">
-				<span>Edit Sample</span>
+				<span>Edit Analysis</span>
 			</div>
 			<ng-template #create>
-				<span> Create Sample</span>
+				<span> Create Analysis</span>
 			</ng-template>
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 				<div class="form-group row">
 					<div class="col-lg-6">
 						<label class="form-label required"
-							>Enter Sample Name</label
+							>Enter Analysis Name</label
 						>
 						<input
 							type="text"
@@ -45,19 +45,19 @@
 							class="valid-feedback"
 							*ngIf="isControlValid('name')"
 						>
-							Sample Name was entered correct
+							Analysis Name was entered correct
 						</div>
 						<div
 							class="invalid-feedback"
 							*ngIf="controlHasError('required', 'name')"
 						>
-							Sample Name is required
+							Analysis Name is required
 						</div>
 						<div
 							class="invalid-feedback"
 							*ngIf="controlHasError('maxLength', 'name')"
 						>
-							Sample Name should have maximum 100 symbols
+							Analysis Name should have maximum 100 symbols
 						</div>
 					</div>
 
@@ -93,14 +93,14 @@
 						</div>
 					</div>
 
-					<ng-template #sampleTypeEdit>
+					<ng-template #analysisTypeEdit>
 						<div class="col-lg-6">
 							<label class="form-label">Vcf Type</label>
 							<input
 								type="text"
 								class="form-control  form-control-md"
 								name="name"
-								value="{{ sample.vcfType | vcfTypeConverter }}"
+								value="{{ analysis.vcfType | vcfTypeConverter }}"
 							disabled/>
 						</div>
 					</ng-template>
@@ -144,47 +144,47 @@
 								type="text"
 								class="form-control  form-control-md"
 								name="name"
-								value="{{ sample.workspace?.name }}"
+								value="{{ analysis.workspace?.name }}"
 							disabled/>
 						</div>
 					</ng-template>
 					<div class="col-lg-6" *ngIf="!id;">
-						<label class="form-label">Select Batch</label>
+						<label class="form-label">Select Sample</label>
 						<select
 							class="form-control form-control-lg form-control-solid"
-							name="batch"
-							[class.is-invalid]="isControlInvalid('batch')"
-							[class.is-valid]="isControlValid('batch')"
-							formControlName="batch"
+							name="sample"
+							[class.is-invalid]="isControlInvalid('sample')"
+							[class.is-valid]="isControlValid('sample')"
+							formControlName="sample"
 						>
 							<option
-								*ngFor="let batch of batches"
-								[value]="batch.id"
+								*ngFor="let sample of samples"
+								[value]="sample.id"
 							>
-								{{ batch.name }}
+								{{ sample.name }}
 							</option>
 						</select>
 						<div
 							class="valid-feedback"
-							*ngIf="isControlValid('batch')"
+							*ngIf="isControlValid('sample')"
 						>
-							Batch was entered correct
+							Sample was entered correct
 						</div>
 						<div
 							class="invalid-feedback"
-							*ngIf="controlHasError('required', 'batch')"
+							*ngIf="controlHasError('required', 'sample')"
 						>
-							Batch is required
+							Sample is required
 						</div>
 					</div>
-					<ng-template #batchEdit>
+					<ng-template #sampleEdit>
 						<div class="col-lg-6">
-							<label class="form-label">Batch</label>
+							<label class="form-label">Sample</label>
 							<input
 								type="text"
 								class="form-control  form-control-md"
 								name="name"
-								value="{{ sample.batch?.name }}"
+								value="{{ analysis.sample?.name }}"
 							disabled/>
 						</div>
 					</ng-template>
@@ -228,7 +228,7 @@
 								type="text"
 								class="form-control form-control-md not-allowed"
 								name="name"
-								value="{{ sample.gender }}"
+								value="{{ analysis.gender }}"
 							disabled/>
 						</div>
 					</ng-template>

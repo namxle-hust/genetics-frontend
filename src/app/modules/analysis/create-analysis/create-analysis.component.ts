@@ -1,20 +1,20 @@
-import { Component, OnInit, OnDestroy, Input, AfterContentInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { BatchModel, SampleModel, WorkspaceModel } from 'src/app/core/models';
-import { BatchService, SampleService, WorkspaceService } from 'src/app/core/services';
+import { Observable, Subscription } from 'rxjs';
+import { SampleModel, AnalysisModel, WorkspaceModel } from 'src/app/core/models';
+import { AnalysisService, SampleService, WorkspaceService } from 'src/app/core/services';
 import { GenderEnum, VcfTypeEnum,  } from 'src/app/core/config';
 import { VCF_TYPES, GENDERS } from 'src/app/core/constants';
  
 @Component({
-    selector: 'app-create-sample',
-    templateUrl: './create-sample.component.html',
-    styleUrls: ['./create-sample.component.scss'],
-    providers: [WorkspaceService, BatchService]
+    selector: 'app-create-analysis',
+    templateUrl: './create-analysis.component.html',
+    styleUrls: ['./create-analysis.component.scss'],
+    providers: [WorkspaceService, SampleService]
 })
-export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class CreateAnalysisComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     @Input() id: number;
 
@@ -22,7 +22,7 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
 
     public genders = GENDERS;
 
-    public sample: SampleModel;
+    public analysis: AnalysisModel;
 
     public formGroup: FormGroup;
 
@@ -32,7 +32,7 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
 
     public workspaces: WorkspaceModel[] = [];
 
-    public batches: BatchModel[] = [];
+    public samples: SampleModel[] = [];
 
     isLoading: boolean = false;
 
@@ -40,14 +40,14 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
     constructor(
         public modal: NgbActiveModal,
         private toastr: ToastrService,
-        private sampleService: SampleService,
+        private analysisService: AnalysisService,
         private workspaceService: WorkspaceService,
-        private batchService: BatchService,
+        private sampleService: SampleService,
         private fb: FormBuilder,
     ) {
         // this.isUpbloadReadySubject = new BehaviorSubject<boolean>(true)
 
-        this.isLoading$ = this.sampleService.isLoading$;
+        this.isLoading$ = this.analysisService.isLoading$;
         const sb = this.isLoading$.subscribe(value => this.isLoading = value)
         this.subscriptions.push(sb)
 
@@ -56,7 +56,7 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
     ngOnInit(): void {
         this.loadData();
         this.loadWorkspace();
-        this.loadBatches()
+        this.loadSamples()
     }
 
 
@@ -68,9 +68,9 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
         if (!this.id) {
             this.loadForm();
         } else {
-            const sb = this.sampleService.getItemById(this.id).subscribe((sample: SampleModel | undefined) => {
-                if (sample) {
-                    this.sample = sample;
+            const sb = this.analysisService.getItemById(this.id).subscribe((analysis: AnalysisModel | undefined) => {
+                if (analysis) {
+                    this.analysis = analysis;
                     this.loadFormEdit();
                 } else {
                     this.modal.dismiss();
@@ -87,17 +87,17 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
         this.subscriptions.push(sb);
     }
 
-    loadBatches() {
-        const sb = this.batchService.getBatches().subscribe((batches: BatchModel[]) => {
-            this.batches = batches;
+    loadSamples() {
+        const sb = this.sampleService.getSamples().subscribe((samples: SampleModel[]) => {
+            this.samples = samples;
         })
         this.subscriptions.push(sb);
     }
 
     loadFormEdit(): void {
         this.formGroup = this.fb.group({
-            name: [this.sample.name, Validators.compose([Validators.required, Validators.maxLength(100)])],
-            description: [this.sample.description, Validators.compose([Validators.maxLength(1000)])]
+            name: [this.analysis.name, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            description: [this.analysis.description, Validators.compose([Validators.maxLength(1000)])]
         })
     }
 
@@ -106,7 +106,7 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
             name: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
             vcfType: [null, Validators.compose([Validators.required])],
             workspace: [null, Validators.compose([Validators.required])],
-            batch: [null, Validators.compose([Validators.required])],
+            sample: [null, Validators.compose([Validators.required])],
             description: ['', Validators.compose([Validators.maxLength(1000)])],
             gender: [null, Validators.compose([Validators.required])]
             
@@ -117,7 +117,7 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
         }
     }
 
-    get SelectedSampleType(): VcfTypeEnum {
+    get SelectedAnalysisType(): VcfTypeEnum {
         return this.formGroup.value.vcfType
     }
 
@@ -126,10 +126,10 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
     }
 
     edit() {
-        const sb = this.sampleService.update(this.sample).pipe(
+        const sb = this.analysisService.update(this.analysis).pipe(
         ).subscribe((response) => {
             if (response) {
-                this.toastr.success('Batch File updated successfully!');
+                this.toastr.success('Analysis updated successfully!');
                 this.modal.close();
             }
         });
@@ -137,9 +137,9 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
     }
 
     create() {
-        const sb = this.sampleService.create(this.sample).subscribe((response) => {
+        const sb = this.analysisService.create(this.analysis).subscribe((response) => {
             if (response) {
-                this.toastr.success('Batch File created successfully');
+                this.toastr.success('Analysis created successfully');
                 this.modal.close()
             }
         });
@@ -179,16 +179,16 @@ export class CreateSampleComponent implements OnInit, OnDestroy, AfterViewChecke
     private prepareData() {
         const formData = this.formGroup.value;
         if (this.id) {
-            this.sample.name = formData.name;
-            this.sample.id = this.id
+            this.analysis.name = formData.name;
+            this.analysis.id = this.id
 
         } else {
-            this.sample = new SampleModel();
-            this.sample.name = formData.name;
-            this.sample.vcfType = formData.vcfType;
-            this.sample.workspaceId = parseInt(formData.workspace)
-            this.sample.batchId = parseInt(formData.batch)
-            this.sample.gender = this.SelectedGender
+            this.analysis = new AnalysisModel();
+            this.analysis.name = formData.name;
+            this.analysis.vcfType = formData.vcfType;
+            this.analysis.workspaceId = parseInt(formData.workspace)
+            this.analysis.sampleId = parseInt(formData.sample)
+            this.analysis.gender = this.SelectedGender
         }
     }
 

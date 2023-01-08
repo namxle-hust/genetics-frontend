@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SampleStatusEnum, VcfTypeEnum } from '../config';
-import { SAMPLE_STATUSES, VCF_TYPES } from '../constants';
+import { AnalysisStatusEnum, VcfTypeEnum } from '../config';
+import { ANALYSIS_STATUSES, VCF_TYPES } from '../constants';
 
 
 @Pipe({
@@ -16,12 +16,12 @@ export class VcfTypeConverterPipe implements PipeTransform {
 }
 
 @Pipe({
-    name: 'sampleStatusConverter'
+    name: 'analysisStatusConverter'
 })
-export class SampleStatusConverterPipe implements PipeTransform {
+export class AnalysisStatusConverterPipe implements PipeTransform {
 
-    transform(value: SampleStatusEnum): String {
-        let type = SAMPLE_STATUSES.find(type => type.value == value);
+    transform(value: AnalysisStatusEnum): String {
+        let type = ANALYSIS_STATUSES.find(type => type.value == value);
         return type ? type.name : '';
     }
 

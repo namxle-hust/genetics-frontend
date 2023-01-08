@@ -21,15 +21,9 @@ const Routing: Routes = [
     },
     {
         canActivate: [AuthGuard],
-        path: 'samples',
+        path: 'analysis',
         loadChildren: () =>
-            import('./modules/samples/samples.module').then((m) => m.SamplesModule)
-    },
-    {
-        canActivate: [AuthGuard],
-        path: 'batch-files',
-        loadChildren: () =>
-            import('./modules/batch-files/batch-files.module').then((m) => m.BatchFileModule)
+            import('./modules/analysis/analysis.module').then((m) => m.AnalysisModule)
     },
     {
         canActivate: [AuthGuard],

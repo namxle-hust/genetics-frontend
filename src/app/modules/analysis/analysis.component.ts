@@ -1,3 +1,4 @@
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -19,16 +20,17 @@ import {
     IGroupingView,
     ISearchView
 } from 'src/app/shared/crud-table'
-import { BatchService } from 'src/app/core/services';
-import { CreateBatchFilesComponent } from './create-batch-files/create-batch-files.component';
+import { AnalysisService } from 'src/app/core/services';
+import { CreateAnalysisComponent } from './create-analysis/create-analysis.component';
 import { ConfirmModalComponent } from 'src/app/shared/partials/confirm-modal/confirm-modal.component';
 
+
 @Component({
-    selector: 'app-batch-files',
-    templateUrl: './batch-files.component.html',
-    styleUrls: ['./batch-files.component.scss']
+    selector: 'app-analyses',
+    templateUrl: './analysis.component.html',
+    styleUrls: ['./analysis.component.scss']
 })
-export class BatchFilesComponent implements
+export class AnalysisComponent implements
     OnInit,
     OnDestroy,
     ICreateAction,
@@ -40,8 +42,7 @@ export class BatchFilesComponent implements
     ISortView,
     IFilterView,
     IGroupingView,
-    ISearchView,
-    IFilterView {
+    ISearchView {
 
     paginator: PaginatorState;
     sorting: SortState;
@@ -56,21 +57,21 @@ export class BatchFilesComponent implements
     constructor(
         private fb: FormBuilder,
         private modalService: NgbModal,
-        public batchService: BatchService,
+        public analysisService: AnalysisService,
         private toastr: ToastrService
     ) { }
 
     ngOnInit(): void {
         this.filterForm();
         this.searchForm();
-        this.batchService.fetch();
-        this.grouping = this.batchService.grouping;
-        this.paginator = this.batchService.paginator;
-        this.sorting = this.batchService.sorting;
-        const sb = this.batchService.isLoading$.subscribe(res => this.isLoading = res);
+        this.analysisService.fetch();
+        this.grouping = this.analysisService.grouping;
+        this.paginator = this.analysisService.paginator;
+        this.sorting = this.analysisService.sorting;
+        const sb = this.analysisService.isLoading$.subscribe(res => this.isLoading = res);
         this.subscriptions.push(sb);
 
-        const sbErrorMessage = this.batchService.errorMessage$.subscribe((value) => {
+        const sbErrorMessage = this.analysisService.errorMessage$.subscribe((value) => {
             if (value) {
                 this.toastr.error(value);
             }
@@ -96,7 +97,7 @@ export class BatchFilesComponent implements
         // if (status) {
         //     filter['status'] = status;
         // }
-        // this.batchService.patchState({ filter });
+        // this.analysisService.patchState({ filter });
     }
 
     searchForm() {
@@ -113,7 +114,7 @@ export class BatchFilesComponent implements
     }
 
     search(searchTerm: string) {
-        this.batchService.patchState({ searchTerm });
+        this.analysisService.patchState({ searchTerm });
     }
 
     // sorting
@@ -126,12 +127,12 @@ export class BatchFilesComponent implements
         } else {
             sorting.direction = sorting.direction === 'asc' ? 'desc' : 'asc';
         }
-        this.batchService.patchState({ sorting });
+        this.analysisService.patchState({ sorting });
     }
 
     // pagination
     paginate(paginator: PaginatorState) {
-        this.batchService.patchState({ paginator });
+        this.analysisService.patchState({ paginator });
     }
 
 
@@ -140,11 +141,11 @@ export class BatchFilesComponent implements
     }
 
     edit(id?: number) {
-        const modalRef = this.modalService.open(CreateBatchFilesComponent, { size: 'lg' });
+        const modalRef = this.modalService.open(CreateAnalysisComponent, { size: 'lg' });
         modalRef.componentInstance.id = id;
         modalRef.result.then(() =>
-            this.batchService.fetch(),
-            () => { this.batchService.fetch() },
+            this.analysisService.fetch(),
+            () => { this.analysisService.fetch() },
         );
     }
 
@@ -152,16 +153,16 @@ export class BatchFilesComponent implements
         this.deleteModal = this.modalService.open(ConfirmModalComponent, { size: 'md' });
 
         this.deleteModal.componentInstance.confirmButtonTitle = 'Delete';
-        this.deleteModal.componentInstance.modalTitle = 'Delete Batch Files';
-        this.deleteModal.componentInstance.confirmQuestion = 'Are you sure to delete this batch files';
+        this.deleteModal.componentInstance.modalTitle = 'Delete Analyses';
+        this.deleteModal.componentInstance.confirmQuestion = 'Are you sure to delete this analyses';
         this.deleteModal.componentInstance.executingMessage = 'Deleting...';
-        
+
         const sbIsSubmit = this.deleteModal.componentInstance.isDelete$.subscribe((value: boolean) => {
             if (value) {
                 console.log("Deleting")
                 // this.deleteModal.close();
                 this.deleteModal.componentInstance.isLoadingSubject.next(true);
-                const sb = this.batchService.deleteItems(this.grouping.getSelectedRows()).subscribe((value) => {
+                const sb = this.analysisService.deleteItems(this.grouping.getSelectedRows()).subscribe((value) => {
                     if (value) {
                         this.deleteModal.close();
                     }
@@ -175,16 +176,16 @@ export class BatchFilesComponent implements
         })
 
         this.deleteModal.result.then(() =>
-            this.batchService.fetch(),
-            () => { 
-                this.batchService.fetch()
+            this.analysisService.fetch(),
+            () => {
+                this.analysisService.fetch()
             }
         );
     }
 
 
     delete(id: number) {
-       
+
     }
 
     fetchSelected() {
@@ -199,4 +200,5 @@ export class BatchFilesComponent implements
         this.subscriptions.forEach((sb) => sb.unsubscribe());
     }
 }
+
 

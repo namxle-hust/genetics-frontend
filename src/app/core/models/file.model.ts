@@ -60,7 +60,7 @@ export interface IFile {
     id?: number
     name: string
     size: number
-    batchId?: number
+    sampleId?: number
     uploadedName: string
 }
 
@@ -68,6 +68,6 @@ export class FileModel implements IFile {
     id: number
     name: string
     size: number
-    batchId: number
+    sampleId: number
     uploadedName: string
 }

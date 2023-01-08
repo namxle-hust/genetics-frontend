@@ -33,7 +33,7 @@
 						type="text"
 						class="form-control form-control-sm"
 						name="searchText"
-						placeholder="Search Samples"
+						placeholder="Search sample"
 						value=""
 						formControlName="searchTerm"
 					/>
@@ -102,7 +102,7 @@
 								/>
 							</div>
 						</th>
-						<th class="min-w-140px">
+						<th class="min-w-150px">
 							Name
 							<app-sort-icon
 								column="name"
@@ -112,22 +112,23 @@
 								(sort)="sort($event)"
 							></app-sort-icon>
 						</th>
-						<th class="min-w-140px">
+						<th class="min-w-150px">
 							Type
 						</th>
 						<th class="min-w-140px">
-							Workspace
-						</th>
-                        <th class="min-w-140px">
-                            Batch
-                        </th>
-                        <th class="min-w-110px">
-                            Status
-                        </th>
-						<th class="min-w-110px">
 							Date Created
 							<app-sort-icon
 								column="createdAt"
+								class="mr-3"
+								[activeColumn]="sorting.column"
+								[activeDirection]="sorting.direction"
+								(sort)="sort($event)"
+							></app-sort-icon>
+						</th>
+						<th class="min-w-120px">
+							Date Updated
+							<app-sort-icon
+								column="updatedAt"
 								class="mr-3"
 								[activeColumn]="sorting.column"
 								[activeDirection]="sorting.direction"
@@ -167,31 +168,25 @@
 							>
 						</td>
                         <td>
-                            {{ sample.vcfType | vcfTypeConverter }}
-                        </td>
-                        <td>
-                            {{ sample.workspace?.name }}
-                        </td>
-                        <td>
-                            {{ sample.batch?.name }}
-                        </td>
-                        <td>
-                            {{ sample.status | sampleStatusConverter }}
+                            {{ sample.type | sampleTypeConverter }}
                         </td>
 						<td>
 							{{ sample.createdAt }}
 						</td>
 						<td>
+							{{ sample.updatedAt }}
+						</td>
+						<td>
 							<div class="d-flex flex-shrink-0">
 								<a
-									routerLink="./{{ sample.id }}/detail"
-									class="btn btn-icon btn-bg-light btn-active-color-info btn-sm me-1"
+									href="javascript:void(0)"
+									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
 								>
 									<span
 										[inlineSVG]="
-											'./assets/media/icons/duotune/general/gen045.svg'
+											'./assets/media/icons/duotune/general/gen019.svg'
 										"
-										class="svg-icon svg-icon-3 svg-icon-info"
+										class="svg-icon svg-icon-3"
 									></span>
 								</a>
 								<a
@@ -203,18 +198,18 @@
 										[inlineSVG]="
 											'./assets/media/icons/duotune/art/art005.svg'
 										"
-										class="svg-icon svg-icon-3 svg-icon-primary"
+										class="svg-icon svg-icon-3"
 									></span>
 								</a>
 								<a
 									href="#"
-									class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
 								>
 									<span
 										[inlineSVG]="
 											'./assets/media/icons/duotune/general/gen027.svg'
 										"
-										class="svg-icon svg-icon-3 svg-icon-danger"
+										class="svg-icon svg-icon-3"
 									></span>
 								</a>
 							</div>

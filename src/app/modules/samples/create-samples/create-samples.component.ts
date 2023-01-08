@@ -3,25 +3,25 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { BatchModel, FileCreate, FileCreateType } from 'src/app/core/models';
-import { BatchService, UploadService } from 'src/app/core/services';
+import { SampleModel, FileCreate, FileCreateType } from 'src/app/core/models';
+import { SampleService, UploadService } from 'src/app/core/services';
 import { SampleTypeEnum } from 'src/app/core/config';
 import { SAMPLE_TYPES } from 'src/app/core/constants';
 import { lengthArray, minLengthArray } from 'src/app/core/validators';
 
 @Component({
-    selector: 'app-create-batch-files',
-    templateUrl: './create-batch-files.component.html',
-    styleUrls: ['./create-batch-files.component.scss'],
+    selector: 'app-create-samples',
+    templateUrl: './create-samples.component.html',
+    styleUrls: ['./create-samples.component.scss'],
     providers: [UploadService]
 })
-export class CreateBatchFilesComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     @Input() id: number;
 
     public sampleTypes = SAMPLE_TYPES;
 
-    public batchFile: BatchModel;
+    public sample: SampleModel;
 
     public formGroup: FormGroup;
 
@@ -45,12 +45,12 @@ export class CreateBatchFilesComponent implements OnInit, OnDestroy, AfterViewCh
         public modal: NgbActiveModal,
         private toastr: ToastrService,
         private uploadService: UploadService,
-        private batchService: BatchService,
+        private sampleService: SampleService,
         private fb: FormBuilder,
     ) {
         // this.isUpbloadReadySubject = new BehaviorSubject<boolean>(true)
 
-        this.isLoading$ = this.batchService.isLoading$;
+        this.isLoading$ = this.sampleService.isLoading$;
         const sb = this.isLoading$.subscribe(value => this.isLoading = value)
         this.subscriptions.push(sb)
 
@@ -102,9 +102,9 @@ export class CreateBatchFilesComponent implements OnInit, OnDestroy, AfterViewCh
         if (!this.id) {
             this.loadForm();
         } else {
-            const sb = this.batchService.getItemById(this.id).subscribe((batchFile: BatchModel | undefined) => {
-                if (batchFile) {
-                    this.batchFile = batchFile;
+            const sb = this.sampleService.getItemById(this.id).subscribe((sample: SampleModel | undefined) => {
+                if (sample) {
+                    this.sample = sample;
                     this.loadFormEdit();
                 } else {
                     this.modal.dismiss();
@@ -116,7 +116,7 @@ export class CreateBatchFilesComponent implements OnInit, OnDestroy, AfterViewCh
 
     loadFormEdit(): void {
         this.formGroup = this.fb.group({
-            name: [this.batchFile.name, Validators.compose([Validators.required, Validators.maxLength(100)])]
+            name: [this.sample.name, Validators.compose([Validators.required, Validators.maxLength(100)])]
         })
     }
 
@@ -136,10 +136,10 @@ export class CreateBatchFilesComponent implements OnInit, OnDestroy, AfterViewCh
     }
 
     edit() {
-        const sb = this.batchService.update(this.batchFile).pipe(
+        const sb = this.sampleService.update(this.sample).pipe(
         ).subscribe((response) => {
             if (response) {
-                this.toastr.success('Batch File updated successfully!');
+                this.toastr.success('Sample updated successfully!');
                 this.modal.close();
             }
         });
@@ -147,9 +147,9 @@ export class CreateBatchFilesComponent implements OnInit, OnDestroy, AfterViewCh
     }
 
     create() {
-        const sb = this.batchService.create(this.batchFile).subscribe((response) => {
+        const sb = this.sampleService.create(this.sample).subscribe((response) => {
             if (response) {
-                this.toastr.success('Batch File created successfully');
+                this.toastr.success('Sample created successfully');
                 this.modal.close()
             }
         });
@@ -188,14 +188,14 @@ export class CreateBatchFilesComponent implements OnInit, OnDestroy, AfterViewCh
     private prepareData() {
         const formData = this.formGroup.value;
         if (this.id) {
-            this.batchFile.name = formData.name;
-            this.batchFile.id = this.id
+            this.sample.name = formData.name;
+            this.sample.id = this.id
 
         } else {
-            this.batchFile = new BatchModel();
-            this.batchFile.name = formData.name;
-            this.batchFile.type = formData.type;
-            this.batchFile.files = this.uploadedFiles ? this.uploadedFiles : [];
+            this.sample = new SampleModel();
+            this.sample.name = formData.name;
+            this.sample.type = formData.type;
+            this.sample.files = this.uploadedFiles ? this.uploadedFiles : [];
         }
     }
 

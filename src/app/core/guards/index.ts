@@ -1,1 +1,1 @@
-export * from './samples.guard'
+export * from './analysis.guard'

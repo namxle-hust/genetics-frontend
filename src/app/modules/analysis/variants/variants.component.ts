@@ -22,12 +22,12 @@ import {
 } from 'src/app/shared/crud-table'
 
 @Component({
-    selector: 'app-sample-variants',
-    templateUrl: './sample-variants.component.html',
-    styleUrls: ['./sample-variants.component.scss'],
+    selector: 'app-variants',
+    templateUrl: './variants.component.html',
+    styleUrls: ['./variants.component.scss'],
     providers: [VariantService]
 })
-export class SampleVariantsComponent implements
+export class VariantsComponent implements
     OnInit,
     OnDestroy,
     ICreateAction,
@@ -50,7 +50,7 @@ export class SampleVariantsComponent implements
     filterGroup: FormGroup;
     searchGroup: FormGroup;
 
-    private sampleId: number;
+    private analysisId: number;
 
     private subscriptions: Subscription[] = []
 
@@ -61,12 +61,11 @@ export class SampleVariantsComponent implements
         private route: ActivatedRoute,
         private renderer: Renderer2
     ) {
-        this.sampleId = this.route.snapshot.params["id"];
-        this.variantService.sampleId = this.sampleId
+        this.analysisId = this.route.snapshot.params["id"];
+        this.variantService.analysisId = this.analysisId
     }
 
     ngOnInit(): void {
-        console.log(this.sampleId)
         this.filterForm();
         this.searchForm();
         this.variantService.fetch();

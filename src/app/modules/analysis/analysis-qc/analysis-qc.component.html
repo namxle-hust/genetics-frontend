@@ -5,12 +5,14 @@
             class="spinner-border text-primary"
         ></div>
     </div>
-    <iframe
-        #iframe
-        (load)="iframeLoaded()"
-        [src]="url | safeUrl"
-        frameBorder="0"
-        width="100%"
-        height="900px"
-    ></iframe>
+    <div *ngIf="!(isUrlLoading$ | async)">
+        <iframe
+            #iframe
+            (load)="iframeLoaded()"
+            [src]="url | safeUrl"
+            frameBorder="0"
+            width="100%"
+            height="900px"
+        ></iframe>
+    </div>
 </div>

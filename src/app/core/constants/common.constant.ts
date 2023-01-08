@@ -1,4 +1,4 @@
-import { FileUploadStatusEnum, GenderEnum, RoleEnum, SampleStatusEnum, SampleTypeEnum, VcfTypeEnum } from "../config/enum"
+import { FileUploadStatusEnum, GenderEnum, RoleEnum, AnalysisStatusEnum, SampleTypeEnum, VcfTypeEnum } from "../config/enum"
 
 export const ROLES = [
     {
@@ -55,32 +55,41 @@ export const VCF_TYPES = [
     }
 ]
 
-export const SAMPLE_STATUSES = [
+export const ANALYSIS_STATUSES = [
     {
         name: 'Fastq Queuing',
-        value: SampleStatusEnum.FASTQ_QUEUING
+        value: AnalysisStatusEnum.FASTQ_QUEUING
+    },
+    {
+        name: 'Fastq Queuing',
+        value: AnalysisStatusEnum.FASTQ_RABBITMQ_QUEING
     },
     {
         name: 'Fastq Analyzing',
-        value: SampleStatusEnum.FASTQ_ANALYZING
-    }, {
+        value: AnalysisStatusEnum.FASTQ_ANALYZING
+    },
+    {
         name: 'Vcf Queuing',
-        value: SampleStatusEnum.VCF_QUEUING
+        value: AnalysisStatusEnum.VCF_QUEUING
+    },
+    {
+        name: 'Vcf Queuing',
+        value: AnalysisStatusEnum.VCF_RABBITMQ_QUEUING
     },
     {
         name: 'Vcf Analyzing',
-        value: SampleStatusEnum.VCF_ANALYZING
+        value: AnalysisStatusEnum.VCF_ANALYZING
     }, {
         name: 'Import Queuing',
-        value: SampleStatusEnum.IMPORT_QUEUING
+        value: AnalysisStatusEnum.IMPORT_QUEUING
     },
     {
         name: 'Analyzed',
-        value: SampleStatusEnum.ANALYZED
+        value: AnalysisStatusEnum.ANALYZED
     },
     {
         name: 'Error',
-        value: SampleStatusEnum.ERROR
+        value: AnalysisStatusEnum.ERROR
     },
 
 ]

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'app-sample-detail',
-    templateUrl: './sample-detail.component.html',
-    styleUrls: ['./sample-detail.component.scss']
+    selector: 'app-analysis-detail',
+    templateUrl: './analysis-detail.component.html',
+    styleUrls: ['./analysis-detail.component.scss']
 })
-export class SampleDetailComponent implements OnInit {
-    sampleId: number
+export class AnalysisDetailComponent implements OnInit {
+    analysisId: number
 
     public currentTabIndex: number = 0
 
@@ -30,7 +30,7 @@ export class SampleDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.sampleId = this.route.snapshot.params["id"]
+        this.analysisId = this.route.snapshot.params["id"]
 
     }
 

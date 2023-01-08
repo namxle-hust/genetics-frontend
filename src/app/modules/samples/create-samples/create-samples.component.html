@@ -2,10 +2,10 @@
 	<div class="modal-header">
 		<div class="modal-title h4" id="example-modal-sizes-title-lg">
 			<div *ngIf="id; else create">
-				<span>Edit Batch</span>
+				<span>Edit Sample</span>
 			</div>
 			<ng-template #create>
-				<span> Create Batch</span>
+				<span> Create Sample</span>
 			</ng-template>
 		</div>
 	</div>
@@ -25,7 +25,7 @@
 			>
 				<div class="form-group row">
 					<div class="col-lg-6">
-						<label class="form-label required">Enter Batch Name</label>
+						<label class="form-label required">Enter Sample Name</label>
 						<input
 							type="text"
 							class="form-control form-control-lg form-control-solid"
@@ -40,19 +40,19 @@
 							class="valid-feedback"
 							*ngIf="isControlValid('name')"
 						>
-							Batch Name was entered correct
+							Sample Name was entered correct
 						</div>
 						<div
 							class="invalid-feedback"
 							*ngIf="controlHasError('required', 'name')"
 						>
-							Batch Name is required
+							Sample Name is required
 						</div>
 						<div
 							class="invalid-feedback"
 							*ngIf="controlHasError('maxLength', 'name')"
 						>
-							Batch Name should have maximum 100 symbols
+							Sample Name should have maximum 100 symbols
 						</div>
 					</div>
 					<div *ngIf="!id; else sampleTypeEdit" class="col-lg-6">
@@ -95,7 +95,7 @@
 								class="form-control form-control-lg form-control-solid"
 								name="name"
 								value="{{
-									batchFile.type | sampleTypeConverter
+									sample.type | sampleTypeConverter
 								}}"
 							/>
 						</div>

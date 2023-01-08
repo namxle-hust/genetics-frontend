@@ -3,7 +3,7 @@
 
 	<div class="card-header border-0 pt-5">
 		<h3 class="card-title align-items-start flex-column">
-			<span class="card-label fw-bolder fs-3 mb-1">Your Batch Files</span>
+			<span class="card-label fw-bolder fs-3 mb-1">Your Analyses</span>
 		</h3>
 		<div
 			class="card-toolbar"
@@ -19,7 +19,7 @@
 					"
 					class="svg-icon svg-icon-3"
 				></span>
-				Create Batch Files
+				Create Analysis
 			</a>
 		</div>
 	</div>
@@ -33,7 +33,7 @@
 						type="text"
 						class="form-control form-control-sm"
 						name="searchText"
-						placeholder="Search batch files"
+						placeholder="Search Analyses"
 						value=""
 						formControlName="searchTerm"
 					/>
@@ -102,7 +102,7 @@
 								/>
 							</div>
 						</th>
-						<th class="min-w-150px">
+						<th class="min-w-140px">
 							Name
 							<app-sort-icon
 								column="name"
@@ -112,23 +112,22 @@
 								(sort)="sort($event)"
 							></app-sort-icon>
 						</th>
-						<th class="min-w-150px">
+						<th class="min-w-140px">
 							Type
 						</th>
 						<th class="min-w-140px">
+							Workspace
+						</th>
+                        <th class="min-w-140px">
+                            Sample
+                        </th>
+                        <th class="min-w-110px">
+                            Status
+                        </th>
+						<th class="min-w-110px">
 							Date Created
 							<app-sort-icon
 								column="createdAt"
-								class="mr-3"
-								[activeColumn]="sorting.column"
-								[activeDirection]="sorting.direction"
-								(sort)="sort($event)"
-							></app-sort-icon>
-						</th>
-						<th class="min-w-120px">
-							Date Updated
-							<app-sort-icon
-								column="updatedAt"
 								class="mr-3"
 								[activeColumn]="sorting.column"
 								[activeDirection]="sorting.direction"
@@ -143,7 +142,7 @@
 				<tbody>
 					<tr
 						*ngFor="
-							let batch of batchService.items$ | async
+							let analysis of analysisService.items$ | async
 						"
 					>
 						<td>
@@ -153,63 +152,69 @@
 								<input
 									class="form-check-input widget-9-check"
 									type="checkbox"
-									(click)="grouping.selectRow(batch.id)"
+									(click)="grouping.selectRow(analysis.id)"
 									[checked]="
-										grouping.isRowSelected(batch.id)
+										grouping.isRowSelected(analysis.id)
 									"
 								/>
 							</div>
 						</td>
 						<td>
 							<a
-								class="batch-name"
+								class="analysis-name"
 								href="javascript:void(0)"
-								>{{ batch.name }}</a
+								>{{ analysis.name }}</a
 							>
 						</td>
                         <td>
-                            {{ batch.type | sampleTypeConverter }}
+                            {{ analysis.vcfType | vcfTypeConverter }}
+                        </td>
+                        <td>
+                            {{ analysis.workspace?.name }}
+                        </td>
+                        <td>
+                            {{ analysis.sample?.name }}
+                        </td>
+                        <td>
+                            {{ analysis.status | analysisStatusConverter }}
                         </td>
 						<td>
-							{{ batch.createdAt }}
-						</td>
-						<td>
-							{{ batch.updatedAt }}
+							{{ analysis.createdAt }}
 						</td>
 						<td>
 							<div class="d-flex flex-shrink-0">
 								<a
-									href="javascript:void(0)"
-									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+									routerLink="./{{ analysis.id }}/detail"
+									class="btn btn-icon btn-bg-light btn-active-color-info btn-sm me-1"
 								>
 									<span
 										[inlineSVG]="
-											'./assets/media/icons/duotune/general/gen019.svg'
+											'./assets/media/icons/duotune/general/gen045.svg'
 										"
-										class="svg-icon svg-icon-3"
+										class="svg-icon svg-icon-3 svg-icon-info"
 									></span>
 								</a>
 								<a
 									href="javascript:void(0)"
-									(click)="edit(batch.id)"
+									(click)="edit(analysis.id)"
 									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
 								>
 									<span
 										[inlineSVG]="
 											'./assets/media/icons/duotune/art/art005.svg'
 										"
-										class="svg-icon svg-icon-3"
+										class="svg-icon svg-icon-3 svg-icon-primary"
 									></span>
 								</a>
 								<a
 									href="#"
-									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+									class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
 								>
 									<span
 										[inlineSVG]="
 											'./assets/media/icons/duotune/general/gen027.svg'
 										"
-										class="svg-icon svg-icon-3"
+										class="svg-icon svg-icon-3 svg-icon-danger"
 									></span>
 								</a>
 							</div>

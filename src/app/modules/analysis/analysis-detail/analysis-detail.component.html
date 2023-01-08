@@ -2,13 +2,13 @@
 	<div class="card-header border-0 pt-5">
 		<h3 class="card-title align-items-start flex-column">
 			<span class="card-label fw-bolder fs-3 mb-1"
-				>Sample Details: IKHS10000001</span
+				>Analysis Detail: IKHS10000001</span
 			>
 		</h3>
 		<div class="align-items-start flex-column mb-5">
 			<div
 				class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-600 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold fs-5 my-5 my-lg-0 align-items-stretch"
-				id="#kt_sample_details_menu"
+				id="#kt_analysis_details_menu"
 				data-kt-menu="true"
 			>
 				<!-- Workspace -->
@@ -29,10 +29,10 @@
 	<div class="card-body py-3">
 		<div class="py-3">
 			<div *ngIf="currentTabIndex == 0">
-				<app-sample-qc></app-sample-qc>
+				<app-analysis-qc [analysisId]="analysisId"></app-analysis-qc>
 			</div>
 			<div *ngIf="currentTabIndex == 1">
-				<app-sample-variants></app-sample-variants>
+				<app-variants></app-variants>
 			</div>
 		</div>
 

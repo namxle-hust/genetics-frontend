@@ -7,8 +7,8 @@ import { ApiService } from '../services';
 @Injectable({
     providedIn: 'root'
 })
-export class SamplesGuard implements CanActivate {
-    private path = 'samples'
+export class AnanlysisGuard implements CanActivate {
+    private path = 'analysis'
 
     constructor(private router: Router, private apiService: ApiService, private toastr: ToastrService) { }
     canActivate(

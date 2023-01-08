@@ -1,4 +1,3 @@
-
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -21,9 +20,8 @@ import {
     ISearchView
 } from 'src/app/shared/crud-table'
 import { SampleService } from 'src/app/core/services';
-import { CreateSampleComponent } from './create-sample/create-sample.component';
+import { CreateSamplesComponent } from './create-samples/create-samples.component';
 import { ConfirmModalComponent } from 'src/app/shared/partials/confirm-modal/confirm-modal.component';
-
 
 @Component({
     selector: 'app-samples',
@@ -42,7 +40,8 @@ export class SamplesComponent implements
     ISortView,
     IFilterView,
     IGroupingView,
-    ISearchView {
+    ISearchView,
+    IFilterView {
 
     paginator: PaginatorState;
     sorting: SortState;
@@ -141,7 +140,7 @@ export class SamplesComponent implements
     }
 
     edit(id?: number) {
-        const modalRef = this.modalService.open(CreateSampleComponent, { size: 'lg' });
+        const modalRef = this.modalService.open(CreateSamplesComponent, { size: 'lg' });
         modalRef.componentInstance.id = id;
         modalRef.result.then(() =>
             this.sampleService.fetch(),
@@ -156,7 +155,7 @@ export class SamplesComponent implements
         this.deleteModal.componentInstance.modalTitle = 'Delete Samples';
         this.deleteModal.componentInstance.confirmQuestion = 'Are you sure to delete this samples';
         this.deleteModal.componentInstance.executingMessage = 'Deleting...';
-
+        
         const sbIsSubmit = this.deleteModal.componentInstance.isDelete$.subscribe((value: boolean) => {
             if (value) {
                 console.log("Deleting")
@@ -177,7 +176,7 @@ export class SamplesComponent implements
 
         this.deleteModal.result.then(() =>
             this.sampleService.fetch(),
-            () => {
+            () => { 
                 this.sampleService.fetch()
             }
         );
@@ -185,7 +184,7 @@ export class SamplesComponent implements
 
 
     delete(id: number) {
-
+       
     }
 
     fetchSelected() {
@@ -200,5 +199,4 @@ export class SamplesComponent implements
         this.subscriptions.forEach((sb) => sb.unsubscribe());
     }
 }
-
 
