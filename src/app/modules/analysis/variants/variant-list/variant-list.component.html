@@ -1,3 +1,9 @@
+<div *ngIf="variantService.isLoading$ | async" class="spin-loading">
+	<div
+		style="position: fixed; top: 50%; left: 50%; z-index: 100"
+		class="spinner-border text-primary"
+	></div>
+</div>
 <ng-container *ngIf="grouping.getSelectedRowsCount()">
 	<div class="form mb-5">
 		<div
@@ -59,9 +65,7 @@
 						(sort)="sort($event)"
 					></app-sort-icon>
 				</th>
-                <th class="min-w-80px">
-                    Chromosome
-                </th>
+				<th class="min-w-80px">Chromosome</th>
 				<th class="min-w-150px">
 					Transcript
 					<app-sort-icon
@@ -87,13 +91,7 @@
 		</thead>
 		<!-- end::Table head -->
 		<!-- begin::Table body -->
-		<tbody class="position-relative">
-			<div *ngIf="variantService.isLoading$ | async" class="spin-loading">
-				<div
-					style="position: fixed; top: 50%; left: 50%; z-index: 100"
-					class="spinner-border text-primary"
-				></div>
-			</div>
+		<tbody>
 			<tr *ngFor="let variant of variantService.items$ | async">
 				<td>
 					<div

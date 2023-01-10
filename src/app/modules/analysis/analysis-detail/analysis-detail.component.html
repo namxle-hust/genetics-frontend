@@ -1,9 +1,9 @@
 <div class="card card-xxl-stretch mb-5">
 	<div class="card-header border-0 pt-5">
 		<h3 class="card-title align-items-start flex-column">
-			<span class="card-label fw-bolder fs-3 mb-1"
-				>Analysis Detail: IKHS10000001</span
-			>
+			<span class="card-label fw-bolder fs-3 mb-1">
+				Analysis Detail: {{ analysis.name ? analysis.name : "" }}
+			</span>
 		</h3>
 		<div class="align-items-start flex-column mb-5">
 			<div
@@ -19,6 +19,19 @@
 						[ngClass]="{ active: tab.isSelected }"
 						><span class="menu-title">{{ tab.name }}</span></a
 					>
+				</div>
+				<div class="menu-item me-lg-3">
+					<a
+						routerLink="/analysis"
+						class="btn btn-sm btn-secondary"
+					>
+						<span
+							[inlineSVG]="
+								'./assets/media/icons/duotune/arrows/arr022.svg'
+							"
+							class="svg-icon svg-icon-3"
+						></span>
+					</a>
 				</div>
 			</div>
 		</div>

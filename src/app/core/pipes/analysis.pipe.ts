@@ -27,4 +27,29 @@ export class AnalysisStatusConverterPipe implements PipeTransform {
 
 }
 
+@Pipe({
+    name: 'analysisAvailable'
+})
+export class AnalysisAvailablePipe implements PipeTransform {
+
+    transform(value: AnalysisStatusEnum): boolean {
+        if (value == AnalysisStatusEnum.ANALYZED) {
+            return true
+        }
+        return false
+    }
+}
+
+@Pipe({
+    name: 'analysisClass'
+})
+export class AnalysisClassPipe implements PipeTransform {
+
+    transform(value: AnalysisStatusEnum): String {
+        let type = ANALYSIS_STATUSES.find(type => type.value == value);
+        return type ? type.class : '';
+    }
+}
+
+
 

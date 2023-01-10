@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AnalysisComponent } from './analysis.component';
 import { AnalysisRoutingModule } from './analysis-routing.module';
 import { CreateAnalysisComponent } from './create-analysis/create-analysis.component';
-import { AnalysisStatusConverterPipe, VcfTypeConverterPipe } from 'src/app/core/pipes';
+import { AnalysisAvailablePipe, AnalysisClassPipe, AnalysisStatusConverterPipe, VcfTypeConverterPipe } from 'src/app/core/pipes';
 import { CRUDTableModule } from 'src/app/shared/crud-table';
 import { NgSelect2Module } from 'ng-select2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -30,7 +30,9 @@ import { SafeUrlPipe } from 'src/app/core/pipes';
         AnalysisDetailComponent,
         VariantFilterComponent,
         VariantListComponent,
-        SafeUrlPipe
+        SafeUrlPipe,
+        AnalysisAvailablePipe,
+        AnalysisClassPipe
     ],
     imports: [
         CommonModule,

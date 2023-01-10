@@ -23,7 +23,7 @@ import {
 import { AnalysisService } from 'src/app/core/services';
 import { CreateAnalysisComponent } from './create-analysis/create-analysis.component';
 import { ConfirmModalComponent } from 'src/app/shared/partials/confirm-modal/confirm-modal.component';
-
+import { ANALYSIS_STATUSES } from 'src/app/core/constants';
 
 @Component({
     selector: 'app-analyses',
@@ -53,6 +53,8 @@ export class AnalysisComponent implements
     private subscriptions: Subscription[] = [];
 
     private deleteModal: NgbModalRef;
+
+    analisysStatuses = ANALYSIS_STATUSES
 
     constructor(
         private fb: FormBuilder,

@@ -12,7 +12,11 @@
 			data-bs-trigger="hover"
 			title="Click to add a user"
 		>
-			<a href="javascript:void(0)" (click)="create()" class="btn btn-sm btn-primary">
+			<a
+				href="javascript:void(0)"
+				(click)="create()"
+				class="btn btn-sm btn-primary"
+			>
 				<span
 					[inlineSVG]="
 						'./assets/media/icons/duotune/arrows/arr075.svg'
@@ -88,7 +92,7 @@
 				<!-- begin::Table head -->
 				<thead>
 					<tr class="fw-bolder text-muted">
-						<th class="w-25px">
+						<th class="w-45px">
 							<div
 								class="form-check form-check-sm form-check-custom form-check-solid"
 							>
@@ -112,18 +116,10 @@
 								(sort)="sort($event)"
 							></app-sort-icon>
 						</th>
-						<th class="min-w-140px">
-							Type
-						</th>
-						<th class="min-w-140px">
-							Workspace
-						</th>
-                        <th class="min-w-140px">
-                            Sample
-                        </th>
-                        <th class="min-w-110px">
-                            Status
-                        </th>
+						<th class="min-w-140px">Type</th>
+						<th class="min-w-150px">Workspace</th>
+						<th class="min-w-140px">Sample</th>
+						<th class="text-center min-w-150px">Status</th>
 						<th class="min-w-110px">
 							Date Created
 							<app-sort-icon
@@ -134,17 +130,13 @@
 								(sort)="sort($event)"
 							></app-sort-icon>
 						</th>
-						<th class="min-w-100px">Actions</th>
+						<th class="w-120px text-center">Actions</th>
 					</tr>
 				</thead>
 				<!-- end::Table head -->
 				<!-- begin::Table body -->
 				<tbody>
-					<tr
-						*ngFor="
-							let analysis of analysisService.items$ | async
-						"
-					>
+					<tr *ngFor="let analysis of analysisService.items$ | async">
 						<td>
 							<div
 								class="form-check form-check-sm form-check-custom form-check-solid"
@@ -160,36 +152,37 @@
 							</div>
 						</td>
 						<td>
-							<a
-								class="analysis-name"
-								href="javascript:void(0)"
-								>{{ analysis.name }}</a
-							>
+							<a>{{ analysis.name }}</a>
 						</td>
-                        <td>
-                            {{ analysis.vcfType | vcfTypeConverter }}
-                        </td>
-                        <td>
-                            {{ analysis.workspace?.name }}
-                        </td>
-                        <td>
-                            {{ analysis.sample?.name }}
-                        </td>
-                        <td>
-                            {{ analysis.status | analysisStatusConverter }}
-                        </td>
+						<td>
+							{{ analysis.vcfType | vcfTypeConverter }}
+						</td>
+						<td>
+							{{ analysis.workspace?.name }}
+						</td>
+						<td>
+							{{ analysis.sample?.name }}
+						</td>
+						<td class="text-center analysis-status">
+							<span [class]="analysis.status | analysisClass">
+								{{ analysis.status | analysisStatusConverter }}
+							</span>
+						</td>
 						<td>
 							{{ analysis.createdAt }}
 						</td>
 						<td>
-							<div class="d-flex flex-shrink-0">
+							<div
+								class="d-flex flex-shrink-0 justify-content-center"
+							>
 								<a
+									*ngIf="analysis.status | analysisAvailable"
 									routerLink="./{{ analysis.id }}/detail"
 									class="btn btn-icon btn-bg-light btn-active-color-info btn-sm me-1"
 								>
 									<span
 										[inlineSVG]="
-											'./assets/media/icons/duotune/general/gen045.svg'
+											'./assets/media/icons/duotune/general/gen057.svg'
 										"
 										class="svg-icon svg-icon-3 svg-icon-info"
 									></span>

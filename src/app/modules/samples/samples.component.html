@@ -12,7 +12,11 @@
 			data-bs-trigger="hover"
 			title="Click to add a user"
 		>
-			<a href="javascript:void(0)" (click)="create()" class="btn btn-sm btn-primary">
+			<a
+				href="javascript:void(0)"
+				(click)="create()"
+				class="btn btn-sm btn-primary"
+			>
 				<span
 					[inlineSVG]="
 						'./assets/media/icons/duotune/arrows/arr075.svg'
@@ -112,9 +116,7 @@
 								(sort)="sort($event)"
 							></app-sort-icon>
 						</th>
-						<th class="min-w-150px">
-							Type
-						</th>
+						<th class="min-w-150px">Type</th>
 						<th class="min-w-140px">
 							Date Created
 							<app-sort-icon
@@ -141,11 +143,7 @@
 				<!-- end::Table head -->
 				<!-- begin::Table body -->
 				<tbody>
-					<tr
-						*ngFor="
-							let sample of sampleService.items$ | async
-						"
-					>
+					<tr *ngFor="let sample of sampleService.items$ | async">
 						<td>
 							<div
 								class="form-check form-check-sm form-check-custom form-check-solid"
@@ -161,15 +159,11 @@
 							</div>
 						</td>
 						<td>
-							<a
-								class="sample-name"
-								href="javascript:void(0)"
-								>{{ sample.name }}</a
-							>
+							<a>{{ sample.name }}</a>
 						</td>
-                        <td>
-                            {{ sample.type | sampleTypeConverter }}
-                        </td>
+						<td>
+							{{ sample.type | sampleTypeConverter }}
+						</td>
 						<td>
 							{{ sample.createdAt }}
 						</td>
@@ -184,9 +178,9 @@
 								>
 									<span
 										[inlineSVG]="
-											'./assets/media/icons/duotune/general/gen019.svg'
+											'./assets/media/icons/duotune/general/gen052.svg'
 										"
-										class="svg-icon svg-icon-3"
+										class="svg-icon svg-icon-3 svg-icon-info"
 									></span>
 								</a>
 								<a
@@ -198,7 +192,7 @@
 										[inlineSVG]="
 											'./assets/media/icons/duotune/art/art005.svg'
 										"
-										class="svg-icon svg-icon-3"
+										class="svg-icon svg-icon-3 svg-icon-primary"
 									></span>
 								</a>
 								<a
@@ -209,7 +203,7 @@
 										[inlineSVG]="
 											'./assets/media/icons/duotune/general/gen027.svg'
 										"
-										class="svg-icon svg-icon-3"
+										class="svg-icon svg-icon-3 svg-icon-danger"
 									></span>
 								</a>
 							</div>

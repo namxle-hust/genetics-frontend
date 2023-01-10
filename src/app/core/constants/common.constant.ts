@@ -58,38 +58,47 @@ export const VCF_TYPES = [
 export const ANALYSIS_STATUSES = [
     {
         name: 'Fastq Queuing',
-        value: AnalysisStatusEnum.FASTQ_QUEUING
+        value: AnalysisStatusEnum.FASTQ_QUEUING,
+        class: 'queuing'
     },
     {
         name: 'Fastq Queuing',
-        value: AnalysisStatusEnum.FASTQ_RABBITMQ_QUEING
+        value: AnalysisStatusEnum.FASTQ_RABBITMQ_QUEING,
+        class: 'queuing'
     },
     {
         name: 'Fastq Analyzing',
-        value: AnalysisStatusEnum.FASTQ_ANALYZING
+        value: AnalysisStatusEnum.FASTQ_ANALYZING,
+        class: 'analyzing'
     },
     {
         name: 'Vcf Queuing',
-        value: AnalysisStatusEnum.VCF_QUEUING
+        value: AnalysisStatusEnum.VCF_QUEUING,
+        class: 'queuing'
     },
     {
         name: 'Vcf Queuing',
-        value: AnalysisStatusEnum.VCF_RABBITMQ_QUEUING
+        value: AnalysisStatusEnum.VCF_RABBITMQ_QUEUING,
+        class: 'queuing'
     },
     {
         name: 'Vcf Analyzing',
-        value: AnalysisStatusEnum.VCF_ANALYZING
+        value: AnalysisStatusEnum.VCF_ANALYZING,
+        class: 'analyzing'
     }, {
         name: 'Import Queuing',
-        value: AnalysisStatusEnum.IMPORT_QUEUING
+        value: AnalysisStatusEnum.IMPORT_QUEUING,
+        class: 'queuing'
     },
     {
         name: 'Analyzed',
-        value: AnalysisStatusEnum.ANALYZED
+        value: AnalysisStatusEnum.ANALYZED,
+        class: 'analyzed'
     },
     {
         name: 'Error',
-        value: AnalysisStatusEnum.ERROR
+        value: AnalysisStatusEnum.ERROR,
+        class: 'error'
     },
 
 ]

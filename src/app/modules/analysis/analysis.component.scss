@@ -1,0 +1,17 @@
+
+.analysis-status {
+    span {
+        padding: 5px 10px;
+        border-radius: 4px;
+
+        &.analyzed {
+            background-color: var(--kt-primary);
+            color: var(--kt-primary-light)
+        }
+
+        &.queuing {
+            background-color: var(--kt-warning-active);
+            color: var(--kt-warning-light)
+        }
+    }
+}
