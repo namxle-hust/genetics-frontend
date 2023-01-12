@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "demo7": {
+    "genetics": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/demo7",
+            "outputPath": "dist/genetics",
             "allowedCommonJsDependencies": [
               "object-path",
               "apexcharts",
@@ -83,10 +83,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "demo7:build:production"
+              "browserTarget": "genetics:build:production"
             },
             "development": {
-              "browserTarget": "demo7:build:development"
+              "browserTarget": "genetics:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +94,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "demo7:build"
+            "browserTarget": "genetics:build"
           }
         },
         "test": {
@@ -127,7 +127,7 @@
       }
     }
   },
-  "defaultProject": "demo7",
+  "defaultProject": "genetics",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   }
