@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --no-live-reload",
-    "build": "ng build --prod --outputHashing=all",
+    "build": "ng build",
+    "build:production": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "rtl": "webpack --config=rtl.config.js",
     "test": "ng test",
