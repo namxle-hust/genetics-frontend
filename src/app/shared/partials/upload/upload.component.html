@@ -16,8 +16,8 @@
 			Click or drag {{ sampleType }} files to this area to upload
 		</h6>
         <ng-template #vcfTitle>
-            <h6 class="text-muted">
-                You can upload 1 VCF file
+            <h6 class="text-warning">
+                VCF sample with format .vcf or .vcf.gz
             </h6>
         </ng-template>
         <h6 *ngIf="sampleType == FILE_UPLOAD_TYPE.FASTQ; else vcfTitle" class="text-warning">

@@ -100,7 +100,7 @@ export class UploadService implements OnDestroy  {
                 params: {
                     Body: fileData,
                     Bucket: 'varigenes-storage',
-                    Key: `${S3_UPLOAD_FOLDER}/${fileData.name}`
+                    Key: `${S3_UPLOAD_FOLDER}/${file.name}`
                 },
                 queueSize: 4, // optional concurrency configuration
                 partSize: 1024 * 1024 * 5, // optional size of each part, in bytes, at least 5MB

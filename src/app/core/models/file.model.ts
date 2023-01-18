@@ -6,6 +6,7 @@ export interface IFileUpload {
     file: File
     status: FileUploadStatusEnum
     progress: number
+    name: string
 }
 
 export interface IAWSCredential {
@@ -20,6 +21,21 @@ export class FileUpload implements IFileUpload {
     file: File
     status: FileUploadStatusEnum
     progress: number
+    name: string
+
+    generateName(fileName: string): string {
+        let currentDate = new Date()
+
+        let year = currentDate.getFullYear();
+        let month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+        let date = ("0" + currentDate.getDate()).slice(-2)
+        let hour = ("0" + currentDate.getHours()).slice(-2)
+        let minutes = ("0" + currentDate.getMinutes()).slice(-2)
+        let seconds = ("0" + currentDate.getSeconds()).slice(-2)
+        let msecs = ('00' + currentDate.getMilliseconds()).slice(-3);
+
+        return `${year}${month}${date}${hour}${minutes}${seconds}${msecs}_${fileName}`
+    }
 
     generateId(length: number): string {
         var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -31,7 +47,7 @@ export class FileUpload implements IFileUpload {
     }
 
     constructor(file: File) {
-    
+        this.name = this.generateName(file.name.replace(' ', '_'))
         this.id = this.generateId(6)
         this.file = file
         this.status = FileUploadStatusEnum.QUEUING
@@ -48,9 +64,8 @@ export class FileCreate implements IFile {
     uploadedName: string
     name: string
     size: number
-
     constructor(data: IFileUpload) {
-        this.uploadedName = data.file.name
+        this.uploadedName = data.name
         this.name = data.file.name
         this.size = data.file.size
     }

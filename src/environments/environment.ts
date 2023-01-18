@@ -7,7 +7,7 @@ export const environment = {
     appVersion: 'v1.0.0',
     USERDATA_KEY: 'auth-token',
     isMockEnabled: false,
-    apiUrl: 'http://localhost:3900',
+    apiUrl: 'http://api.genetics.vn',
 
 };
 

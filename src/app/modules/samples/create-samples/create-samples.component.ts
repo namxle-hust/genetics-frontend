@@ -183,6 +183,7 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
         } else {
             this.create()
         }
+        console.log(this.sample);
     }
 
     private prepareData() {
