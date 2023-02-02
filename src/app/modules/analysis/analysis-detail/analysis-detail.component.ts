@@ -4,6 +4,11 @@ import { Subscription } from 'rxjs';
 import { AnalysisModel } from 'src/app/core/models';
 import { AnalysisService } from 'src/app/core/services';
 
+enum TABS {
+    QC = 'quality-control',
+    VARIANTS = 'variants',
+    REPORT = 'report'
+}
 @Component({
     selector: 'app-analysis-detail',
     templateUrl: './analysis-detail.component.html',
@@ -14,6 +19,8 @@ export class AnalysisDetailComponent implements OnInit, OnDestroy {
 
     analysis: AnalysisModel;
 
+    public tab: string | null;
+
     public currentTabIndex: number = 0
 
     private subscription: Subscription [] = []
@@ -21,10 +28,17 @@ export class AnalysisDetailComponent implements OnInit, OnDestroy {
     public tabs = [
         {
             name: 'Quality Control',
+            id: TABS.QC,
             isSelected: true,
         },
         {
             name: 'Variants',
+            id: TABS.VARIANTS,
+            isSelected: false
+        },
+        {
+            name: 'Report',
+            id: TABS.REPORT,
             isSelected: false
         }
     ]
@@ -34,7 +48,15 @@ export class AnalysisDetailComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private analysisService: AnalysisService
     ) {
-
+        this.route.fragment.subscribe(tab => {
+            if (!tab) {
+                this.tab = TABS.QC
+            } else {
+                this.tab = tab
+            }
+            console.log('Change')
+            this.updateTab()
+        })
     }
 
     ngOnInit(): void {
@@ -55,15 +77,19 @@ export class AnalysisDetailComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/analysis')
     }
 
-    changeTab(name: string): void {
+    updateTab(): void {
         this.tabs.forEach((tab, index) => {
-            if (tab.name == name) {
+            if (tab.id == this.tab) {
                 this.currentTabIndex = index;
                 tab.isSelected = true
             } else {
                 tab.isSelected = false
             }
         })
+    }
+
+    changeTab(id: TABS) {
+        this.router.navigate(['.'], {fragment: id, relativeTo: this.route })
     }
 
 }

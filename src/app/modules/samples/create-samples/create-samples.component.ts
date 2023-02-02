@@ -41,6 +41,10 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
     // private isAllowSubmitSubject: BehaviorSubject<boolean>;
     // public isAllowSubmit$: Observable<boolean>;
 
+
+    private sampleTypeChangeSubject: BehaviorSubject<boolean>
+    public sampleTypeChange$: Observable<boolean>
+
     constructor(
         public modal: NgbActiveModal,
         private toastr: ToastrService,
@@ -54,6 +58,9 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
         const sb = this.isLoading$.subscribe(value => this.isLoading = value)
         this.subscriptions.push(sb)
 
+
+        this.sampleTypeChangeSubject = new BehaviorSubject(false)
+        this.sampleTypeChange$ = this.sampleTypeChangeSubject.asObservable()
 
     }
 
@@ -90,6 +97,7 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
     }
 
     onSampleTypeChange() {
+        this.sampleTypeChangeSubject.next(true);
         console.log(this.formGroup.value.type);
         if (this.formGroup.value.type == SampleTypeEnum.FASTQ) {
             this.formGroup.setControl('files', this.fb.array([], lengthArray(2)))

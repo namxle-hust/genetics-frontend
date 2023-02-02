@@ -9,3 +9,12 @@ export class SafeUrlPipe implements PipeTransform {
         return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 }
+
+
+@Pipe({ name: 'variantClassification' })
+export class VariantClassificaitonPipe implements PipeTransform {
+    constructor() { }
+    transform(classification: string) {
+        return classification.split(' ').join("-")
+    }
+}

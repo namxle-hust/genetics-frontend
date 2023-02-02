@@ -17,6 +17,18 @@ export class VariantFilterComponent implements OnInit {
     @Output() toggleEvent = new EventEmitter<boolean>()
     @Output() applyFilter = new EventEmitter<IVariantFilter>()
 
+    inlineSvgHide = './assets/media/icons/duotune/arrows/arr071.svg';
+    inlineSvgShow = './assets/media/icons/duotune/arrows/arr072.svg';
+   
+    filterSection = {
+        gene: false,
+        read_depth: false,
+        af: false,
+        classification: false,
+        gnomAd: false,
+        chromosome: false
+    }
+
     comparisonOperator = ComparisonOperator
 
     chromosomeList: Select2OptionData[] = []

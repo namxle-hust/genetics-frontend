@@ -13,5 +13,15 @@
             background-color: var(--kt-warning-active);
             color: var(--kt-warning-light)
         }
+
+        &.analyzing {
+            background-color: var(--kt-info);
+            color: var(--kt-info-inverse)
+        }
+
+        &.error {
+            background-color: var(--kt-danger);
+            color: var(--kt-danger-inverse)
+        }
     }
 }

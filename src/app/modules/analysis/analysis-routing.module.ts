@@ -13,8 +13,7 @@ export const routes: Routes = [
     {
         path: ':id/detail',
         canActivate: [AnanlysisGuard],
-        component: AnalysisDetailComponent
-        
+        component: AnalysisDetailComponent      
     },
     { path: '**', redirectTo: 'error/404' },
 ];

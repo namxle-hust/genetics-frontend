@@ -2,7 +2,7 @@
 	<div class="card-header border-0 pt-5">
 		<h3 class="card-title align-items-start flex-column">
 			<span class="card-label fw-bolder fs-3 mb-1">
-				Analysis Detail: {{ analysis.name ? analysis.name : "" }}
+				<span style="color: var(--kt-dark);">Analysis Detail:</span> <span class="ms-3" style="color: var(--kt-primary)">{{ analysis && analysis.name ? analysis.name : "" }}</span>
 			</span>
 		</h3>
 		<div class="align-items-start flex-column mb-5">
@@ -14,13 +14,13 @@
 				<!-- Workspace -->
 				<div *ngFor="let tab of tabs" class="menu-item me-lg-3">
 					<a
-						(click)="changeTab(tab.name)"
+						(click)="changeTab(tab.id)"
 						class="menu-link py-3"
 						[ngClass]="{ active: tab.isSelected }"
 						><span class="menu-title">{{ tab.name }}</span></a
 					>
 				</div>
-				<div class="menu-item me-lg-3">
+				<!-- <div class="menu-item me-lg-3">
 					<a
 						routerLink="/analysis"
 						class="btn btn-sm btn-secondary"
@@ -32,7 +32,7 @@
 							class="svg-icon svg-icon-3"
 						></span>
 					</a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -47,6 +47,8 @@
 			<div *ngIf="currentTabIndex == 1">
 				<app-variants></app-variants>
 			</div>
+            
+
 		</div>
 
 		<!-- begin::Body -->

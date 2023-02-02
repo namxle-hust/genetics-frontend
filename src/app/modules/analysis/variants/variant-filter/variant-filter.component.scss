@@ -16,6 +16,22 @@
     overflow-x: hidden;
     // height: 320px;
     padding: 0px 15px;
+
+    label {
+        background-color: var(--kt-page-bg);
+        color: var(--kt-primary);
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        
+        .float-right {
+            float: right;
+        }
+    }
+
+    .filter-opt {
+        margin: 20px 0px;
+    }
 }
 
 .filter-object {

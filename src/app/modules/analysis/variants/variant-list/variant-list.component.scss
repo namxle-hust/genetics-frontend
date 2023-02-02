@@ -14,14 +14,66 @@
 th {
 	position: sticky;
 	top: 0;
+	font-size: 14px;
+	vertical-align: middle;
 	background-color: #fff;
-    z-index: 100;
+    // color: var(--kt-primary-inverse);
+	z-index: 100;
 	box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.08);
 }
 
-.variant-list-table {
-    border: 1px solid #dee2e6;
-    padding: 0px 10px;
-    border-radius: 5px;
-    height: 420px;
+span.classification {
+    &.benign {
+        color: #fff;
+        background-color: #6793cc;
+    }
+    &.uncertain-significance {
+        color: var(--kt-secondary-inverse);
+       
+        background-color: var(--kt-secondary)
+    }
+
+    &.likely-benign {
+        color: #fff;
+        background-color: #95bbed
+    }
+
+    &.pathogenic {
+        color: #fff;
+        background-color: #da7b78;
+    }
+
+    &.likely-pathogenic {
+        color: #fff;
+        background-color: #e6b8b7;
+    }
+
+    &.drug-response {
+        color: var(--kt-warning-inverse);
+        background-color: var(--kt-warning)
+    }
 }
+
+.variant-list-table {
+	border: 1px solid #dee2e6;
+	// padding: 0px 10px;
+	border-radius: 5px;
+    scrollbar-width: none;
+	height: 420px;
+
+    a:hover {
+    color: var(--kt-primary);
+}
+
+}
+
+.variant-list-table::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+// .variant-status {
+// 	&.benign {
+//         background-color: ;
+// 	}
+// }
+

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Event } from 'aws-sdk/clients/s3';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -15,6 +15,10 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     @Input() sampleType: SampleTypeEnum;
     @Input() isRequired: boolean;
+    @Input() sampleTypeChange$: Observable<boolean>
+
+
+    @ViewChild('fileDropRef', { static: true }) fileDropRef: ElementRef
 
     public FILE_UPLOAD_STATUS = FileUploadStatusEnum
     public FILE_UPLOAD_TYPE = SampleTypeEnum
@@ -73,6 +77,14 @@ export class UploadComponent implements OnInit, OnDestroy {
             }
         })
         this.subscriptions.push(sbCurrentUploadFile);
+
+        const sbSampleTypeChange = this.sampleTypeChange$.subscribe((isChange: boolean) => {
+            if (isChange) {
+                this.resetAllFiles()
+            }
+        })
+        this.subscriptions.push(sbSampleTypeChange);
+
     }
 
     get maximumFileUpload(): number {
@@ -89,12 +101,31 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
 
     handleFile(files: File[]) {
+        console.log(this.fileList);
         if (this.fileList.length == this.maximumFileUpload) {
             this.toastr.error('You have reached maximum number of files!');
             return;
         }
 
-        console.log(files);
+
+        let reg;
+        let message;
+
+        if (this.sampleType == SampleTypeEnum.FASTQ) {
+            reg = /^.*\.(fastq|fastq.gz|fq.gz|fq)$/
+            message = 'Fastq File must end with `.fastq` , `.fastq.gz` , `.fq`or`.fq.gz`'
+        } else {
+            reg = /^.*\.(vcf|vcf.gz)$/
+            message = 'Vcf File must end with `.vcf` or `.vcf.gz`'
+        }
+
+        for (let file of files) {
+            if (reg.test(file.name)) {
+                continue
+            }
+            this.toastr.error(message)
+            return false;
+        }
 
         for (let file of files) {
             let data: IFileUpload = new FileUpload(file);
@@ -131,6 +162,18 @@ export class UploadComponent implements OnInit, OnDestroy {
         }
     }
 
+    async resetAllFiles() {
+        this.queuingFiles = [];
+        this.fileList = [];
+
+        this.fileDropRef.nativeElement.value = ''
+
+        let file = this.uploadService.currentFileUploadValue
+        if (file && file.id) {
+            await this.uploadService.abortCurrentUpload();
+        }
+    }
+
     async deleteFile(id: string) {
         let index;
 
@@ -150,9 +193,6 @@ export class UploadComponent implements OnInit, OnDestroy {
         } else {
             this.checkSaveStatus();
         }
-
-        
-
     }
 
     ngOnDestroy(): void {

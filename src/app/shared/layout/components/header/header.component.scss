@@ -1,3 +1,11 @@
 .active {
     background-color: var(--kt-primary);
 }
+.logo {
+    font-weight: bold;
+    font-size: 27px;
+}
+
+.logo:hover {
+    color: var(--kt-primary);
+}

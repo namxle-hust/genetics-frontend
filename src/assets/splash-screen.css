@@ -30,7 +30,7 @@ body {
 .splash-screen img {
   margin-left: calc(100vw - 100%);
   margin-bottom: 30px;
-  height: 80px !important;
+  height: 50px !important;
 }
 
 [data-theme="dark"] .splash-screen {

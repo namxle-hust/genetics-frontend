@@ -1,6 +1,6 @@
 <span
 	(click)="toggleAside()"
-	class="aside-toggle toggle-btn position-absolute btn btn-icon btn-primary btn-sm btn-hover-primary shadow-sm custom-aside-btn"
+	class="aside-toggle toggle-btn position-absolute btn btn-icon btn-secondary btn-sm shadow-sm custom-aside-btn"
 	id="kt_aside_toggle"
 	data-toggle="tooltip"
 	data-placement="right"
@@ -25,9 +25,47 @@
 	<div class="filter-body h-350px">
 		<!-- begin: Filtration form -->
 		<div class="form form-label-right" [formGroup]="filterGroup">
-			<div class="form-group row mb-1">
-				<label class="text-bold col-12 col-form-label">Gene</label>
-				<div class="col-12">
+			<div class="form-group row">
+				<label
+					(click)="
+						filterSection.chromosome = !filterSection.chromosome
+					"
+					class="text-bold col-12 col-form-label"
+				>
+					Chromosome
+					<span
+						[inlineSVG]="
+							filterSection.chromosome
+								? inlineSvgShow
+								: inlineSvgHide
+						"
+						class="svg-icon svg-icon-3 svg-icon-success float-right"
+					></span>
+				</label>
+				<div class="col-12 filter-opt" [hidden]="!filterSection.chromosome">
+					<ng-select2
+						[data]="chromosomeList"
+						placeholder="Select Chromosome"
+						[options]="options"
+						formControlName="chromosome"
+					>
+					</ng-select2>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label
+					(click)="filterSection.gene = !filterSection.gene"
+					class="text-bold col-12 col-form-label"
+				>
+					Gene
+					<span
+						[inlineSVG]="
+							filterSection.gene ? inlineSvgShow : inlineSvgHide
+						"
+						class="svg-icon svg-icon-3 svg-icon-success float-right"
+					></span>
+				</label>
+				<div class="col-12 filter-opt" [hidden]="!filterSection.gene">
 					<ng-select2
 						placeholder="Select Gene name"
 						[options]="options"
@@ -36,58 +74,96 @@
 					</ng-select2>
 				</div>
 			</div>
-			<div class="form-group row mb-1">
-				<label class="text-bold col-12 col-form-label">
+			<div class="form-group row">
+				<label
+					(click)="
+						filterSection.read_depth = !filterSection.read_depth
+					"
+					class="text-bold col-12 col-form-label"
+				>
 					Read Depth
+					<span
+						[inlineSVG]="
+							filterSection.read_depth
+								? inlineSvgShow
+								: inlineSvgHide
+						"
+						class="svg-icon svg-icon-3 svg-icon-success float-right"
+					></span>
 				</label>
-				<div class="col-5">
-					<select
-						class="form-control form-control-sm"
-						placeholder="Filter by Type"
-						name="type"
-						formControlName="readDepthSign"
-					>
-						<option [value]="comparisonOperator.GREATER">>=</option>
-						<option [value]="comparisonOperator.LOWER">=<</option>
-					</select>
-				</div>
-				<div class="col-7">
-					<input
-						class="form-control form-control-sm"
-						type="number"
-						formControlName="readDepth"
-					/>
-				</div>
+                <div class="row" [hidden]="!filterSection.read_depth">
+                    <div class="col-5 filter-opt">
+                        <select
+                            class="form-control form-control-sm"
+                            placeholder="Filter by Type"
+                            name="type"
+                            formControlName="readDepthSign"
+                        >
+                            <option [value]="comparisonOperator.GREATER">>=</option>
+                            <option [value]="comparisonOperator.LOWER">=<</option>
+                        </select>
+                    </div>
+                    <div class="col-7 filter-opt">
+                        <input
+                            class="form-control form-control-sm"
+                            type="number"
+                            formControlName="readDepth"
+                        />
+                    </div>
+                </div>
 			</div>
-			<div class="form-group row mb-1">
-				<label class="text-bold col-12 col-form-label"
-					>Allele Fraction</label
-				>
+			<div class="form-group row">
+				<label
+					(click)="filterSection.af = !filterSection.af"
+					class="text-bold col-12 col-form-label"
+					>Allele Fraction
+					<span
+						[inlineSVG]="
+							filterSection.af ? inlineSvgShow : inlineSvgHide
+						"
+						class="svg-icon svg-icon-3 svg-icon-success float-right"
+					></span>
+				</label>
 
-				<div class="col-5">
-					<select
-						class="form-control form-control-sm"
-						placeholder="Filter by Type"
-						name="type"
-						formControlName="AFSign"
-					>
-						<option [value]="comparisonOperator.GREATER">>=</option>
-						<option [value]="comparisonOperator.LOWER">=<</option>
-					</select>
-				</div>
-				<div class="col-7">
-					<input
-						class="form-control form-control-sm"
-						type="number"
-						formControlName="alleleFraction"
-					/>
-				</div>
+                <div class="row" [hidden]="!filterSection.af">
+                    <div class="col-5 filter-opt">
+                        <select
+                            class="form-control form-control-sm"
+                            placeholder="Filter by Type"
+                            name="type"
+                            formControlName="AFSign"
+                        >
+                            <option [value]="comparisonOperator.GREATER">>=</option>
+                            <option [value]="comparisonOperator.LOWER">=<</option>
+                        </select>
+                    </div>
+                    <div class="col-7 filter-opt">
+                        <input
+                            class="form-control form-control-sm"
+                            type="number"
+                            formControlName="alleleFraction"
+                        />
+                    </div>
+                </div>
 			</div>
-			<div class="form-group row mb-1">
-				<label class="text-bold col-12 col-form-label"
-					>Classification</label
-				>
-				<div class="col-12">
+			<div class="form-group row">
+				<label
+					(click)="
+						filterSection.classification =
+							!filterSection.classification
+					"
+					class="text-bold col-12 col-form-label"
+					>Classification
+					<span
+						[inlineSVG]="
+							filterSection.classification
+								? inlineSvgShow
+								: inlineSvgHide
+						"
+						class="svg-icon svg-icon-3 svg-icon-success float-right"
+					></span>
+				</label>
+				<div class="col-12 filter-opt" [hidden]="!filterSection.classification">
 					<ng-select2
 						[data]="classificationList"
 						placeholder="Select Classification"
@@ -97,30 +173,46 @@
 					</ng-select2>
 				</div>
 			</div>
-			<div class="form-group row mb-1">
-				<label class="text-bold col-12 col-form-label">GnomAD</label>
+			<div class="form-group row">
+				<label
+					(click)="filterSection.gnomAd = !filterSection.gnomAd"
+					class="text-bold col-12 col-form-label"
+				>
+					GnomAD
+					<span
+						[inlineSVG]="
+							filterSection.gnomAd ? inlineSvgShow : inlineSvgHide
+						"
+						class="svg-icon svg-icon-3 svg-icon-success float-right"
+					></span>
+				</label>
 
-				<div class="col-5">
-					<select
-						class="form-control form-control-sm"
-						placeholder="Filter by Type"
-						name="type"
-						formControlName="gnomAdSign"
-					>
-						<option [value]="comparisonOperator.GREATER">></option>
-						<option [value]="comparisonOperator.LOWER"><</option>
-					</select>
-				</div>
-				<div class="col-7">
-					<input
-						class="form-control form-control-sm"
-						type="number"
-						min="0"
-						formControlName="gnomAd"
-					/>
+				<div class="row" [hidden]="!filterSection.gnomAd">
+					<div class="col-5 filter-opt">
+						<select
+							class="form-control form-control-sm"
+							name="type"
+							formControlName="gnomAdSign"
+						>
+							<option [value]="comparisonOperator.GREATER">
+								>
+							</option>
+							<option [value]="comparisonOperator.LOWER">
+								<
+							</option>
+						</select>
+					</div>
+					<div class="col-7 filter-opt">
+						<input
+							class="form-control form-control-sm"
+							type="number"
+							min="0"
+							formControlName="gnomAd"
+						/>
+					</div>
 				</div>
 			</div>
-			<!-- <div class="form-group row mb-1">
+			<!-- <div class="form-group row">
 				<label class="text-bold col-12 col-form-label"
 					>Annotation</label
 				>
@@ -135,20 +227,6 @@
 					</ng-select2>
 				</div>
 			</div> -->
-			<div class="form-group row">
-				<label class="text-bold col-12 col-form-label"
-					>Chromosome</label
-				>
-				<div class="col-12">
-					<ng-select2
-						[data]="chromosomeList"
-						placeholder="Select Chromosome"
-						[options]="options"
-						formControlName="chromosome"
-					>
-					</ng-select2>
-				</div>
-			</div>
 		</div>
 	</div>
 	<hr />
