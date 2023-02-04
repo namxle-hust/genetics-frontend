@@ -22,6 +22,13 @@ import {
 import { SampleService } from 'src/app/core/services';
 import { CreateSamplesComponent } from './create-samples/create-samples.component';
 import { ConfirmModalComponent } from 'src/app/shared/partials/confirm-modal/confirm-modal.component';
+import { SampleTypeEnum } from 'src/app/core/config';
+import { DEBOUNCE_TIME, SAMPLE_TYPES } from 'src/app/core/constants';
+
+
+interface IFilter {
+    type?: SampleTypeEnum
+}
 
 @Component({
     selector: 'app-samples',
@@ -47,8 +54,12 @@ export class SamplesComponent implements
     sorting: SortState;
     grouping: GroupingState;
     isLoading: boolean;
+
     filterGroup: FormGroup;
     searchGroup: FormGroup;
+
+    sampleTypes = SAMPLE_TYPES
+
     private subscriptions: Subscription[] = [];
 
     private deleteModal: NgbModalRef;
@@ -62,11 +73,12 @@ export class SamplesComponent implements
 
     ngOnInit(): void {
         this.filterForm();
-        this.searchForm();
-        this.sampleService.fetch();
+        // this.searchForm();
         this.grouping = this.sampleService.grouping;
         this.paginator = this.sampleService.paginator;
         this.sorting = this.sampleService.sorting;
+        this.sampleService.fetch()
+
         const sb = this.sampleService.isLoading$.subscribe(res => this.isLoading = res);
         this.subscriptions.push(sb);
 
@@ -78,38 +90,38 @@ export class SamplesComponent implements
         this.subscriptions.push(sbErrorMessage);
     }
 
+
     filterForm() {
-        // this.filterGroup = this.fb.group({
-        //     status: [''],
-        //     searchTerm: [''],
-        // });
-        // this.subscriptions.push(
-        //     this.filterGroup.controls.status.valueChanges.subscribe(() =>
-        //         this.filter()
-        //     )
-        // );
-    }
-
-    filter() {
-        // const filter = {};
-        // const status = this.filterGroup.get('status').value;
-        // if (status) {
-        //     filter['status'] = status;
-        // }
-        // this.sampleService.patchState({ filter });
-    }
-
-    searchForm() {
-        this.searchGroup = this.fb.group({
+        this.filterGroup = this.fb.group({
             searchTerm: [''],
+            type: [''],
         });
-        const searchEvent = this.searchGroup.controls.searchTerm.valueChanges
+
+        const searchEvent = this.filterGroup.controls.searchTerm.valueChanges
             .pipe(
-                debounceTime(150),
+                debounceTime(DEBOUNCE_TIME),
                 distinctUntilChanged()
             )
             .subscribe((val) => this.search(val));
         this.subscriptions.push(searchEvent);
+
+
+        const sampleTypeEvent = this.filterGroup.controls.type.valueChanges.subscribe(() =>
+            this.filter()
+        )
+        this.subscriptions.push(sampleTypeEvent);
+    }
+
+    filter() {
+        let filter: IFilter = {};
+        const type = this.filterGroup.get('type')?.value;
+        if (type) {
+            filter['type'] = type;
+        }
+        this.sampleService.patchState({ filter });
+    }
+
+    searchForm() {
     }
 
     search(searchTerm: string) {
@@ -196,6 +208,7 @@ export class SamplesComponent implements
     }
 
     ngOnDestroy() {
+        this.sampleService.patchStateReset()
         this.subscriptions.forEach((sb) => sb.unsubscribe());
     }
 }

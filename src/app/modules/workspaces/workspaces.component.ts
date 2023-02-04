@@ -21,6 +21,7 @@ import {
 } from 'src/app/shared/crud-table'
 import { WorkspaceService } from 'src/app/core/services';
 import { EditWorkspaceComponent } from './edit-workspace/edit-workspace.component';
+import { DEBOUNCE_TIME } from 'src/app/core/constants';
 
 @Component({
     selector: 'app-workspaces',
@@ -102,7 +103,7 @@ export class WorkspacesComponent implements
         });
         const searchEvent = this.searchGroup.controls.searchTerm.valueChanges
             .pipe(
-                debounceTime(150),
+                debounceTime(DEBOUNCE_TIME),
                 distinctUntilChanged()
             )
             .subscribe((val) => this.search(val));
@@ -110,6 +111,7 @@ export class WorkspacesComponent implements
     }
 
     search(searchTerm: string) {
+        // let searchTerm = this.searchGroup.value.searchTerm;
         this.workspacesService.patchState({ searchTerm });
     }
 
@@ -176,6 +178,7 @@ export class WorkspacesComponent implements
     }
 
     ngOnDestroy() {
+        this.workspacesService.patchStateReset();
         this.subscriptions.forEach((sb) => sb.unsubscribe());
     }
 }

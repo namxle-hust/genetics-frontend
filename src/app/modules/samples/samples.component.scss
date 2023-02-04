@@ -1,0 +1,18 @@
+.list-table {
+	max-height: var(--kt-table-max-height);
+
+    a:hover {
+        color: var(--kt-primary);
+    }
+}
+
+// th {
+// 	position: sticky;
+// 	top: 0;
+// 	font-size: 14px;
+// 	vertical-align: middle;
+// 	background-color: #fff;
+//     // color: var(--kt-primary-inverse);
+// 	z-index: 100;
+// 	box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.08);
+// }

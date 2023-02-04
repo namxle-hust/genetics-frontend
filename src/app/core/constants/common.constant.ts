@@ -1,5 +1,7 @@
 import { FileUploadStatusEnum, GenderEnum, RoleEnum, AnalysisStatusEnum, SampleTypeEnum, VcfTypeEnum } from "../config/enum"
 
+export const DEBOUNCE_TIME = 500
+
 export const ROLES = [
     {
         name: 'Admin',

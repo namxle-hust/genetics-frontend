@@ -1,7 +1,7 @@
 <div class="card card-xxl-stretch mb-5 mb-xl-8">
 	<!-- begin::Header -->
 
-	<div class="card-header border-0 pt-5">
+	<div class="card-header border-1 pt-5">
 		<h3 class="card-title align-items-start flex-column">
 			<span class="card-label fw-bolder fs-3 mb-1">Your Samples</span>
 		</h3>
@@ -29,10 +29,11 @@
 	</div>
 	<!-- end::Header -->
 	<!-- begin::Body -->
-	<div class="card-body py-3">
-		<div class="form form-label-right mb-5">
-			<div class="form-group row">
-				<div class="col-lg-3" [formGroup]="searchGroup">
+	<div class="card-body py-10">
+		<div class="form form-label-right mb-10">
+			<div class="form-group row" [formGroup]="filterGroup">
+				<div class="col-lg-3">
+                    <p><b>Search</b> Sample Name</p>
 					<input
 						type="text"
 						class="form-control form-control-sm"
@@ -41,6 +42,19 @@
 						value=""
 						formControlName="searchTerm"
 					/>
+				</div>
+               <div class="col-lg-2">
+					<p><b>Filter</b> by Sample Type</p>
+					<select
+						class="form-control form-control-sm"
+						name="type"
+						placeholder="Filter by Sample Type"
+						formControlName="type"
+					>
+                        <option value="">All</option>
+                        <option *ngFor="let type of sampleTypes" [value]="type.value">{{ type.name }}</option>
+					</select>
+					<!-- <small class="form-text text-muted"><b>Filter</b> by Status</small> -->
 				</div>
 			</div>
 		</div>
@@ -69,22 +83,20 @@
 								>
 									<i class="fa fa-trash"></i> Delete Selected</button
 								>&nbsp;
-								<!-- <button
-									type="button"
-									class="btn btn-sm btn-light-primary font-weight-bolder font-size-sm mr-1"
-									(click)="shareWorkspace()"
-								>
-									<i class="fa fa-share-alt"></i> Share
-									Workspace
-								</button> -->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</ng-container>
+        <app-paginator
+			class="d-flex justify-content-between align-items-center flex-wrap"
+			[paginator]="paginator"
+			[isLoading]="isLoading"
+			(paginate)="paginate($event)"
+		></app-paginator>
 		<!-- begin::Table container -->
-		<div class="table-responsive">
+		<div class="table-responsive list-table">
 			<!-- begin::Table -->
 			<table
 				class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"

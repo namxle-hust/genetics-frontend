@@ -32,7 +32,7 @@ export class VariantListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(sb => sb.unsubscribe)
-        // this.variantService.patchStateReset()
+        this.variantService.patchStateReset()
     }
 
 }

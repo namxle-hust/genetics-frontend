@@ -23,7 +23,7 @@ import {
 import { AnalysisService } from 'src/app/core/services';
 import { CreateAnalysisComponent } from './create-analysis/create-analysis.component';
 import { ConfirmModalComponent } from 'src/app/shared/partials/confirm-modal/confirm-modal.component';
-import { ANALYSIS_STATUSES } from 'src/app/core/constants';
+import { ANALYSIS_STATUSES, DEBOUNCE_TIME } from 'src/app/core/constants';
 
 @Component({
     selector: 'app-analyses',
@@ -65,7 +65,6 @@ export class AnalysisComponent implements
 
     ngOnInit(): void {
         this.filterForm();
-        this.searchForm();
         this.analysisService.fetch();
         this.grouping = this.analysisService.grouping;
         this.paginator = this.analysisService.paginator;
@@ -82,15 +81,24 @@ export class AnalysisComponent implements
     }
 
     filterForm() {
-        // this.filterGroup = this.fb.group({
-        //     status: [''],
-        //     searchTerm: [''],
-        // });
-        // this.subscriptions.push(
-        //     this.filterGroup.controls.status.valueChanges.subscribe(() =>
-        //         this.filter()
-        //     )
-        // );
+        this.filterGroup = this.fb.group({
+            status: [''],
+            searchTerm: [''],
+        });
+
+        const statusEvent = this.filterGroup.controls.status.valueChanges.subscribe(() =>
+            this.filter()
+        )
+        this.subscriptions.push(statusEvent)
+
+
+        const searchEvent = this.filterGroup.controls.searchTerm.valueChanges
+            .pipe(
+                debounceTime(DEBOUNCE_TIME),
+                distinctUntilChanged()
+            )
+            .subscribe((val) => this.search(val));
+        this.subscriptions.push(searchEvent);
     }
 
     filter() {
@@ -103,16 +111,7 @@ export class AnalysisComponent implements
     }
 
     searchForm() {
-        this.searchGroup = this.fb.group({
-            searchTerm: [''],
-        });
-        const searchEvent = this.searchGroup.controls.searchTerm.valueChanges
-            .pipe(
-                debounceTime(150),
-                distinctUntilChanged()
-            )
-            .subscribe((val) => this.search(val));
-        this.subscriptions.push(searchEvent);
+
     }
 
     search(searchTerm: string) {
@@ -199,6 +198,7 @@ export class AnalysisComponent implements
     }
 
     ngOnDestroy() {
+        this.analysisService.patchStateReset()
         this.subscriptions.forEach((sb) => sb.unsubscribe());
     }
 }

@@ -1,7 +1,7 @@
 <div class="card card-xxl-stretch mb-5 mb-xl-8">
 	<!-- begin::Header -->
 
-	<div class="card-header border-0 pt-5">
+	<div class="card-header border-1 pt-5">
 		<h3 class="card-title align-items-start flex-column">
 			<span class="card-label fw-bolder fs-3 mb-1">Your Workspace</span>
 		</h3>
@@ -29,7 +29,7 @@
 	</div>
 	<!-- end::Header -->
 	<!-- begin::Body -->
-	<div class="card-body py-3">
+	<div class="card-body py-10">
 		<div class="form form-label-right mb-5">
 			<div class="form-group row">
 				<div class="col-lg-3" [formGroup]="searchGroup">
@@ -42,6 +42,15 @@
 						formControlName="searchTerm"
 					/>
 				</div>
+                <!-- <div class="col-lg-3">
+                    <button
+                        (click)="search()"
+						type="button"
+						class="btn btn-sm btn-primary font-weight-bolder font-size-sm mr-1"
+					>
+						Search
+					</button>
+                </div> -->
 			</div>
 		</div>
 		<ng-container *ngIf="grouping.getSelectedRowsCount()">
@@ -116,7 +125,7 @@
 								(sort)="sort($event)"
 							></app-sort-icon>
 						</th>
-						<th class="min-w-150px">Total Analyses</th>
+						<th class="min-w-150px text-center">Total Analyses</th>
 						<th class="min-w-140px">
 							Date Created
 							<app-sort-icon
@@ -163,9 +172,13 @@
 							</div>
 						</td>
 						<td>
-							<a>{{ workspace.name }}</a>
+							<a
+								class="workspace-name"
+								href="javascript:void(0)"
+								>{{ workspace.name }}</a
+							>
 						</td>
-						<td>
+						<td class="text-center">
 							{{ workspace._count.analyses }}
 						</td>
 						<td>
