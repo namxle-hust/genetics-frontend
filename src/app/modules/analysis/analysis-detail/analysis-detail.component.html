@@ -47,6 +47,9 @@
 			<div *ngIf="currentTabIndex == 1">
 				<app-variants></app-variants>
 			</div>
+            <div *ngIf="currentTabIndex == 2">
+                <app-report [analysisId]="analysisId"></app-report>
+            </div>
             
 
 		</div>

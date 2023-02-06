@@ -1,10 +1,11 @@
+a.item-name:hover {
+        color: var(--kt-primary) !important;
+    }
+
 .list-table {
 	max-height: var(--kt-table-max-height);
-
-    a:hover {
-        color: var(--kt-primary);
-    }
 }
+
 
 // th {
 // 	position: sticky;

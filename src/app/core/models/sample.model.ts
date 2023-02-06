@@ -1,6 +1,6 @@
 import { UserModel } from "./user.model"
 import { BaseModel } from "src/app/shared/crud-table"
-import { SampleTypeEnum } from "../config"
+import { EthnicityEnum, GenderEnum, SampleTypeEnum } from "../config"
 import { IFile } from "./file.model"
 
 export interface ISample {
@@ -13,6 +13,12 @@ export interface ISample {
     createdAt?: string
     updatedAt?: string
 
+    firstName?: string
+    lastName?: string
+    dob?: string;
+    ethnicity?: EthnicityEnum;
+    gender?: GenderEnum
+
 }
 
 export class SampleModel implements ISample, BaseModel {
@@ -24,6 +30,12 @@ export class SampleModel implements ISample, BaseModel {
     files: IFile[]
     createdAt?: string
     updatedAt?: string
+
+    firstName?: string
+    lastName?: string
+    dob?: string;
+    ethnicity?: EthnicityEnum;
+    gender?: GenderEnum
 
     constructor() {
     }

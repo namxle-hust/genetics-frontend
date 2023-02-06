@@ -12,8 +12,7 @@ import { CreateSamplesComponent } from './create-samples/create-samples.componen
 import { FormatBytesPipe, SampleTypeConverterPipe, UploadFileileStatusConverterPipe } from 'src/app/core/pipes';
 import { UploadComponent } from 'src/app/shared/partials/upload/upload.component';
 import { ConfirmModalComponent } from 'src/app/shared/partials/confirm-modal/confirm-modal.component';
-
-
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
     declarations: [
@@ -35,7 +34,8 @@ import { ConfirmModalComponent } from 'src/app/shared/partials/confirm-modal/con
         NgbDatepickerModule,
         CommonModule,
         InlineSVGModule,
-        NgbModalModule
+        NgbModalModule,
+        NgxMaskModule.forRoot()
     ],
     providers: [SampleService]
 })

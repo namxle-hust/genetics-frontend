@@ -9,7 +9,10 @@
 			</ng-template>
 		</div>
 	</div>
-	<div class="cursor-default modal-body overflow-auto" style="min-height: 400px; max-height: 550px;">
+	<div
+		class="cursor-default modal-body overflow-auto"
+		style="min-height: 400px; max-height: 550px"
+	>
 		<ng-container *ngIf="isLoading$ | async">
 			<div class="overlay-layer bg-transparent">
 				<div class="spinner spinner-lg spinner-success"></div>
@@ -25,7 +28,9 @@
 			>
 				<div class="form-group row">
 					<div class="col-lg-6">
-						<label class="form-label required">Enter Sample Name</label>
+						<label class="form-label required"
+							>Enter Sample Name</label
+						>
 						<input
 							type="text"
 							class="form-control form-control-lg form-control-solid"
@@ -56,14 +61,16 @@
 						</div>
 					</div>
 					<div *ngIf="!id; else sampleTypeEdit" class="col-lg-6">
-						<label class="form-label required">Select Sample Type</label>
+						<label class="form-label required"
+							>Select Sample Type</label
+						>
 						<select
 							class="form-control form-control-lg form-control-solid"
 							name="type"
 							[class.is-invalid]="isControlInvalid('type')"
 							[class.is-valid]="isControlValid('type')"
 							formControlName="type"
-                            (change)="onSampleTypeChange()"
+							(change)="onSampleTypeChange()"
 						>
 							<option
 								*ngFor="let type of sampleTypes"
@@ -88,30 +95,205 @@
 
 					<ng-template #sampleTypeEdit>
 						<div class="col-lg-6">
-							<label class="form-label required">Sample Type</label>
+							<label class="form-label required"
+								>Sample Type</label
+							>
 							<input
 								type="text"
 								disabled
 								class="form-control form-control-lg form-control-solid"
 								name="name"
-								value="{{
-									sample.type | sampleTypeConverter
-								}}"
+								value="{{ sample.type | sampleTypeConverter }}"
 							/>
 						</div>
 					</ng-template>
 				</div>
+
+				<div class="form-group row mt-10">
+					<div class="col-lg-6">
+						<label class="form-label required"
+							>Enter Patient First Name</label
+						>
+						<input
+							type="text"
+							class="form-control form-control-lg form-control-solid"
+							name="firstName"
+							placeholder="First Name"
+							autocomplete="off"
+							[class.is-invalid]="isControlInvalid('firstName')"
+							[class.is-valid]="isControlValid('firstName')"
+							formControlName="firstName"
+						/>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('firstName')"
+						>
+							First Name was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'firstName')"
+						>
+							First Name is required
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('maxLength', 'firstName')"
+						>
+							First Name should have maximum 100 symbols
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<label class="form-label required"
+							>Enter Patient Last Name</label
+						>
+						<input
+							type="text"
+							class="form-control form-control-lg form-control-solid"
+							name="lastName"
+							placeholder="Last Name"
+							autocomplete="off"
+							[class.is-invalid]="isControlInvalid('lastName')"
+							[class.is-valid]="isControlValid('lastName')"
+							formControlName="lastName"
+						/>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('lastName')"
+						>
+							Last Name was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'lastName')"
+						>
+							Last Name is required
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('maxLength', 'lastName')"
+						>
+							Last Name should have maximum 100 symbols
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row mt-10">
+					<div class="col-lg-6">
+						<label class="form-label required">Date of Birth</label>
+						<input
+							type="text"
+							mask="00/00/0000"
+							class="form-control form-control-lg form-control-solid is-invalid"
+							[dropSpecialCharacters]="false"
+							name="dob"
+							placeholder="mm/dd/yyyy"
+							autocomplete="off"
+							[class.is-invalid]="isControlInvalid('dob')"
+							[class.is-valid]="isControlValid('dob')"
+							formControlName="dob"
+						/>
+
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('dob')"
+						>
+							Date of Birth was entered correct
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="
+								isControlInvalid('dob') &&
+								!controlHasError('dobRange', 'dob')
+							"
+						>
+							Please enter <b>Date of Birth</b>
+							in 'mm/dd/yyyy' format
+						</div>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('dobRange', 'dob')"
+						>
+							Invalid Date!
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<label class="form-label required"
+							>Patient Ethnicity</label
+						>
+						<select
+							class="form-control form-control-lg form-control-solid"
+							name="ethnicity"
+							[class.is-invalid]="isControlInvalid('ethnicity')"
+							[class.is-valid]="isControlValid('ethnicity')"
+							formControlName="ethnicity"
+						>
+							<option
+								*ngFor="let ethnicity of ethnicities"
+								[value]="ethnicity.value"
+							>
+								{{ ethnicity.name }}
+							</option>
+						</select>
+						<!-- <div class="feedback">Please select <b>Ethnicity</b></div> -->
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'ethnicity')"
+						>
+							Patient ethnicity is required
+						</div>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('ethnicity')"
+						>
+							Patient ethnicity was entered correct
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row mt-10">
+					<div class="col-lg-6">
+						<label>Select Patient Gender</label>
+						<select
+							class="form-control form-control-lg form-control-solid"
+							name="gender"
+							[class.is-invalid]="isControlInvalid('gender')"
+							[class.is-valid]="isControlValid('gender')"
+							formControlName="gender"
+						>
+							<option
+								*ngFor="let gender of genders"
+								[value]="gender.value"
+							>
+								{{ gender.name }}
+							</option>
+						</select>
+						<div
+							class="invalid-feedback"
+							*ngIf="controlHasError('required', 'gender')"
+						>
+							Gender is required
+						</div>
+						<div
+							class="valid-feedback"
+							*ngIf="isControlValid('gender')"
+						>
+							Gender was entered correct
+						</div>
+					</div>
+				</div>
+
 				<div *ngIf="SelectedSampleType" class="form-group row mt-10">
-					<hr>
+					<hr />
 					<div class="col-lg-12 mt-10">
 						<label class="form-label mb-5 required"
 							>Upload {{ SelectedSampleType }} files</label
 						>
-                        
+
 						<app-upload
-                            [isRequired]="false"
+							[isRequired]="false"
 							[sampleType]="SelectedSampleType"
-                            [sampleTypeChange$]="sampleTypeChange$"
+							[sampleTypeChange$]="sampleTypeChange$"
 						></app-upload>
 					</div>
 				</div>
@@ -131,7 +313,7 @@
 				type="submit"
 				class="btn btn-primary btn-elevate"
 				(click)="save()"
-				[disabled]="(!formGroup || formGroup.invalid)"
+				[disabled]="!formGroup || formGroup.invalid"
 			>
 				Save
 			</button>

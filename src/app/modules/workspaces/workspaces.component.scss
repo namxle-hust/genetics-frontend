@@ -15,20 +15,11 @@ td.a {
     font-size: 14px;
 }
 
-a.workspace-name {
-    // font-weight: bold;
-    color: var(--kt-primary-active)
-}
-
-a.workspace-name:hover {
-    color: var(--kt-primary)
-}
+a.item-name:hover {
+        color: var(--kt-primary) !important;
+    }
 
 .list-table {
 	max-height: var(--kt-table-max-height);
-
-    a:hover {
-        color: var(--kt-primary);
-    }
 }
 

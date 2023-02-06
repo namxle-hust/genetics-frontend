@@ -22,8 +22,16 @@ export enum AnalysisStatusEnum {
     VCF_RABBITMQ_QUEUING = 'VCF_RABBITMQ_QUEUING',
     VCF_ANALYZING = 'VCF_ANALYZING',
     IMPORT_QUEUING = 'IMPORT_QUEUING',
+    IMPORTING='IMPORTING',
     ANALYZED = 'ANALYZED',
     ERROR = 'ERROR'
+}
+
+
+export enum EthnicityEnum {
+    H = 'H',
+    N = 'N',
+    U = 'U'
 }
 
 export enum GenderEnum {

@@ -31,8 +31,9 @@
 	<!-- begin::Body -->
 	<div class="card-body py-10">
 		<div class="form form-label-right mb-10">
-			<div class="form-group row">
-				<div class="col-lg-3" [formGroup]="filterGroup">
+			<div class="form-group row" [formGroup]="filterGroup">
+				<div class="col-lg-3">
+                    <p><b>Search</b> Analysis Name</p>
 					<input
 						type="text"
 						class="form-control form-control-sm"
@@ -41,6 +42,43 @@
 						value=""
 						formControlName="searchTerm"
 					/>
+				</div>
+                <div class="col-lg-2">
+					<p><b>Filter</b> by Analysis Status</p>
+					<select
+						class="form-control form-control-sm"
+						name="status"
+						placeholder="Filter by Analysis Status"
+						formControlName="status"
+					>
+                        <option value="">All</option>
+                        <option *ngFor="let status of analisysStatusesFilter" [value]="status.value">{{ status.name }}</option>
+					</select>
+					<!-- <small class="form-text text-muted"><b>Filter</b> by Status</small> -->
+				</div>
+                <div class="col-lg-2">
+					<p><b>Filter</b> by VCF Type</p>
+					<select
+						class="form-control form-control-sm"
+						name="type"
+						placeholder="Filter by VCF Type"
+						formControlName="type"
+					>
+                        <option value="">All</option>
+                        <option *ngFor="let type of vcfTypes" [value]="type.value">{{ type.name }}</option>
+					</select>
+				</div>
+                <div class="col-lg-2">
+					<p><b>Filter</b> by Workspace</p>
+					<select
+						class="form-control form-control-sm"
+						name="workspaceId"
+						placeholder="Filter by Workspace"
+						formControlName="workspaceId"
+					>
+                        <option value="">All</option>
+                        <option *ngFor="let workspace of (workspaces$ | async)" [value]="workspace.id">{{ workspace.name }}</option>
+					</select>
 				</div>
 			</div>
 		</div>
@@ -69,14 +107,6 @@
 								>
 									<i class="fa fa-trash"></i> Delete Selected</button
 								>&nbsp;
-								<!-- <button
-									type="button"
-									class="btn btn-sm btn-light-primary font-weight-bolder font-size-sm mr-1"
-									(click)="shareWorkspace()"
-								>
-									<i class="fa fa-share-alt"></i> Share
-									Workspace
-								</button> -->
 							</div>
 						</div>
 					</div>
@@ -136,7 +166,7 @@
 								(sort)="sort($event)"
 							></app-sort-icon>
 						</th>
-                        <th class="text-center min-w-150px">Status</th>
+						<th class="text-center min-w-150px">Status</th>
 						<th class="w-120px text-center">Actions</th>
 					</tr>
 				</thead>
@@ -159,7 +189,7 @@
 							</div>
 						</td>
 						<td>
-							<a>{{ analysis.name }}</a>
+							<a class="item-name" href="javascript:void(0)">{{ analysis.name }}</a>
 						</td>
 						<td>
 							{{ analysis.vcfType | vcfTypeConverter }}
@@ -173,7 +203,7 @@
 						<td>
 							{{ analysis.createdAt }}
 						</td>
-                        <td class="text-center analysis-status">
+						<td class="text-center analysis-status">
 							<span [class]="analysis.status | analysisClass">
 								{{ analysis.status | analysisStatusConverter }}
 							</span>
@@ -194,8 +224,7 @@
 										class="svg-icon svg-icon-3 svg-icon-info"
 									></span>
 								</a>
-								<a
-									href="javascript:void(0)"
+								<button
 									(click)="edit(analysis.id)"
 									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
 								>
@@ -205,9 +234,8 @@
 										"
 										class="svg-icon svg-icon-3 svg-icon-primary"
 									></span>
-								</a>
-								<a
-									href="#"
+								</button>
+								<button
 									class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
 								>
 									<span
@@ -216,7 +244,7 @@
 										"
 										class="svg-icon svg-icon-3 svg-icon-danger"
 									></span>
-								</a>
+								</button>
 							</div>
 						</td>
 					</tr>

@@ -1,7 +1,7 @@
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -20,10 +20,21 @@ import {
     IGroupingView,
     ISearchView
 } from 'src/app/shared/crud-table'
-import { AnalysisService } from 'src/app/core/services';
+import { AnalysisService, WorkspaceService } from 'src/app/core/services';
 import { CreateAnalysisComponent } from './create-analysis/create-analysis.component';
 import { ConfirmModalComponent } from 'src/app/shared/partials/confirm-modal/confirm-modal.component';
-import { ANALYSIS_STATUSES, DEBOUNCE_TIME } from 'src/app/core/constants';
+import { ANALYSIS_STATUSES, ANALYSIS_STATUS_FILTER, DEBOUNCE_TIME, VCF_TYPES } from 'src/app/core/constants';
+import { ActivatedRoute, Params } from '@angular/router';
+import { AnalysisStatusEnum, VcfTypeEnum } from 'src/app/core/config';
+import { WorkspaceModel } from 'src/app/core/models';
+
+
+interface IFilter {
+    status?: AnalysisStatusEnum[]
+    vcfType?: VcfTypeEnum,
+    workspaceId?: number,
+    sampleId?: number
+}
 
 @Component({
     selector: 'app-analyses',
@@ -54,18 +65,44 @@ export class AnalysisComponent implements
 
     private deleteModal: NgbModalRef;
 
-    analisysStatuses = ANALYSIS_STATUSES
+    workspaces$: Observable<WorkspaceModel[]>
+
+    analisysStatusesFilter = ANALYSIS_STATUS_FILTER
+
+    vcfTypes = VCF_TYPES
 
     constructor(
+        private route: ActivatedRoute,
         private fb: FormBuilder,
         private modalService: NgbModal,
         public analysisService: AnalysisService,
-        private toastr: ToastrService
-    ) { }
+        private toastr: ToastrService,
+        // private cd: ChangeDetectorRef,
+        private workspaceService: WorkspaceService
+    ) { 
+        
+    }
+
+    patchParams(params: Params) {
+        if (params.sampleId) {
+            this.filterGroup.controls['sampleId'].setValue(params.sampleId);
+            this.filter();
+        }
+    }
 
     ngOnInit(): void {
-        this.filterForm();
-        this.analysisService.fetch();
+        this.loadWorkspace()
+
+        this.route.queryParams.subscribe(params => {
+            this.filterForm();
+            if (Object.keys(params).length === 0) {
+                this.analysisService.fetch();
+            } else {
+                this.patchParams(params)
+            }
+        })
+        
+    
         this.grouping = this.analysisService.grouping;
         this.paginator = this.analysisService.paginator;
         this.sorting = this.analysisService.sorting;
@@ -84,6 +121,9 @@ export class AnalysisComponent implements
         this.filterGroup = this.fb.group({
             status: [''],
             searchTerm: [''],
+            workspaceId: [''],
+            type: [''],
+            sampleId: ['']
         });
 
         const statusEvent = this.filterGroup.controls.status.valueChanges.subscribe(() =>
@@ -91,6 +131,20 @@ export class AnalysisComponent implements
         )
         this.subscriptions.push(statusEvent)
 
+        const typeEvent = this.filterGroup.controls.type.valueChanges.subscribe(() =>
+            this.filter()
+        )
+        this.subscriptions.push(typeEvent)
+
+        const workspaceEvent = this.filterGroup.controls.workspaceId.valueChanges.subscribe(() => {
+            this.filter()
+        })
+        this.subscriptions.push(workspaceEvent)
+
+        const sampleEvent = this.filterGroup.controls.sampleId.valueChanges.subscribe(() => {
+            this.filter()
+        })
+        this.subscriptions.push(sampleEvent)
 
         const searchEvent = this.filterGroup.controls.searchTerm.valueChanges
             .pipe(
@@ -102,12 +156,28 @@ export class AnalysisComponent implements
     }
 
     filter() {
-        // const filter = {};
-        // const status = this.filterGroup.get('status').value;
-        // if (status) {
-        //     filter['status'] = status;
-        // }
-        // this.analysisService.patchState({ filter });
+        const filter: IFilter = {};
+        const status = this.filterGroup.get('status')?.value?.split(',')?.filter((s: any) => s);
+        if (status && status.length > 0) {
+            filter['status'] = status;
+        }
+
+        const vcfType = this.filterGroup.get('type')?.value;
+        if (vcfType) {
+            filter['vcfType'] = vcfType;
+        }
+
+        const workspaceId = this.filterGroup.get('workspaceId')?.value;
+        if (workspaceId) {
+            filter['workspaceId'] = parseInt(workspaceId);
+        }
+
+        const sampleId = this.filterGroup.get('sampleId')?.value;
+        if (sampleId) {
+            filter['sampleId'] = parseInt(sampleId);
+        }
+
+        this.analysisService.patchState({ filter });
     }
 
     searchForm() {
@@ -148,6 +218,10 @@ export class AnalysisComponent implements
             this.analysisService.fetch(),
             () => { this.analysisService.fetch() },
         );
+    }
+
+    loadWorkspace() {
+        this.workspaces$ = this.workspaceService.getWorkspaces()
     }
 
     deleteSelected() {

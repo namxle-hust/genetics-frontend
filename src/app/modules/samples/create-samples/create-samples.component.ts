@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy, Input, AfterContentInit, AfterViewChecked } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SampleModel, FileCreate, FileCreateType } from 'src/app/core/models';
 import { SampleService, UploadService } from 'src/app/core/services';
 import { SampleTypeEnum } from 'src/app/core/config';
-import { SAMPLE_TYPES } from 'src/app/core/constants';
+import { ETHNICITIES, GENDERS, SAMPLE_TYPES } from 'src/app/core/constants';
 import { lengthArray, minLengthArray } from 'src/app/core/validators';
 
 @Component({
@@ -19,6 +19,8 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
 
     @Input() id: number;
 
+    public ethnicities = ETHNICITIES;
+    public genders = GENDERS;
     public sampleTypes = SAMPLE_TYPES;
 
     public sample: SampleModel;
@@ -124,7 +126,13 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
 
     loadFormEdit(): void {
         this.formGroup = this.fb.group({
-            name: [this.sample.name, Validators.compose([Validators.required, Validators.maxLength(100)])]
+            name: [this.sample.name, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            firstName: [this.sample.firstName, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            lastName: [this.sample.lastName, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            dob: [this.sample.dob, Validators.compose([Validators.nullValidator, Validators.required, dobRangeValidator])],
+            ethnicity: [this.sample.ethnicity, Validators.required],
+            gender: [this.sample.gender, Validators.required]
+
         })
     }
 
@@ -132,7 +140,12 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
         this.formGroup = this.fb.group({
             name: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
             type: [null, Validators.compose([Validators.required])],
-            files: [null]
+            files: [null],
+            firstName: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            lastName: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            dob: [null, Validators.compose([Validators.nullValidator, Validators.required, dobRangeValidator])],
+            ethnicity: [null, Validators.required],
+            gender: [null, Validators.required]
         });
         if (!this.id) {
             this.formGroup.reset();
@@ -199,11 +212,21 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
         if (this.id) {
             this.sample.name = formData.name;
             this.sample.id = this.id
+            this.sample.firstName = formData.firstName;
+            this.sample.lastName = formData.lastName;
+            this.sample.dob = formData.dob;
+            this.sample.gender = formData.gender;
+            this.sample.ethnicity = formData.ethnicity;
 
         } else {
             this.sample = new SampleModel();
             this.sample.name = formData.name;
             this.sample.type = formData.type;
+            this.sample.firstName = formData.firstName;
+            this.sample.lastName = formData.lastName;
+            this.sample.dob = formData.dob;
+            this.sample.gender = formData.gender;
+            this.sample.ethnicity = formData.ethnicity;
             this.sample.files = this.uploadedFiles ? this.uploadedFiles : [];
         }
     }
@@ -214,3 +237,31 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
 }
 
 
+function dobRangeValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    let dob = control.value;
+    console.log(dob);
+    if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dob)) {
+        return { 'dobInvalid': true };
+    }
+
+    // Parse the date parts to integers
+    var parts = dob.split("/");
+    var month = parseInt(parts[0], 10);
+    var day = parseInt(parts[1], 10);
+    var year = parseInt(parts[2], 10);
+
+    // Check the ranges of month and year
+    if (year < 1900 || year > 2030 || month == 0 || month > 12) {
+        return { 'dobRange': true };
+    }
+
+    var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // Adjust for leap years
+    if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
+        monthLength[1] = 29;
+    }
+
+    // Check the range of the day
+    return (day > 0 && day <= monthLength[month - 1]) ? null : { 'dobRange': true };
+}

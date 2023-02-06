@@ -1,0 +1,30 @@
+.report-container {
+    width: 80%;
+    border: 1px solid var(--kt-secondary)
+}
+
+table.enliter-gene-table {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid var(--kt-primary)
+}
+
+.enliter-gene-table tr {
+    border-top: 1px solid var(--kt-primary)
+}
+
+.enliter-gene-table td {
+    border-left: 1px solid var(--kt-primary);
+    padding-left: 5px;
+    vertical-align: top;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+}
+
+.enliter-gene-table th {
+    padding-left: 5px;
+    vertical-align: middle;
+    text-align: center;
+    color: var(--kt-primary);
+}

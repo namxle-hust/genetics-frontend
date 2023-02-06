@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { AnalysisComponent } from './analysis.component';
 import { AnalysisRoutingModule } from './analysis-routing.module';
 import { CreateAnalysisComponent } from './create-analysis/create-analysis.component';
-import { AnalysisAvailablePipe, AnalysisClassPipe, AnalysisStatusConverterPipe, VariantClassificaitonPipe, VcfTypeConverterPipe } from 'src/app/core/pipes';
+import { AnalysisAvailablePipe, AnalysisClassPipe, AnalysisStatusConverterPipe, EthnicityConverterPipe, GenderConverterPipe, VariantClassificaitonPipe, VcfTypeConverterPipe } from 'src/app/core/pipes';
 import { CRUDTableModule } from 'src/app/shared/crud-table';
 import { NgSelect2Module } from 'ng-select2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg-2';
-import { AnalysisService, WorkspaceService } from 'src/app/core/services';
+import { AnalysisService, ReportService, WorkspaceService } from 'src/app/core/services';
 import { VariantsComponent } from './variants/variants.component';
 import { AnalysisQcComponent } from './analysis-qc/analysis-qc.component';
 import { AnalysisDetailComponent } from './analysis-detail/analysis-detail.component';
@@ -17,6 +17,7 @@ import { VariantFilterComponent } from './variants/variant-filter/variant-filter
 import { VariantListComponent } from './variants/variant-list/variant-list.component';
 import { SafeUrlPipe } from 'src/app/core/pipes';
 import { VariantInformationComponent } from './variants/variant-list/variant-information/variant-information.component';
+import { ReportComponent } from './report/report.component';
 
 
 
@@ -35,7 +36,10 @@ import { VariantInformationComponent } from './variants/variant-list/variant-inf
         AnalysisAvailablePipe,
         AnalysisClassPipe,
         VariantClassificaitonPipe,
-        VariantInformationComponent
+        VariantInformationComponent,
+        ReportComponent,
+        GenderConverterPipe,
+        EthnicityConverterPipe
     ],
     imports: [
         CommonModule,
@@ -49,6 +53,6 @@ import { VariantInformationComponent } from './variants/variant-list/variant-inf
         InlineSVGModule,
         NgbModalModule
     ],
-    providers: [AnalysisService]
+    providers: [AnalysisService, ReportService, WorkspaceService]
 })
 export class AnalysisModule { }

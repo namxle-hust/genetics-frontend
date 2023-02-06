@@ -57,6 +57,48 @@ export const VCF_TYPES = [
     }
 ]
 
+export const ANALYSIS_STATUS_FILTER = [
+    {
+        name: 'Fastq Queuing',
+        value: [AnalysisStatusEnum.FASTQ_QUEUING, AnalysisStatusEnum.FASTQ_RABBITMQ_QUEING],
+    },
+    {
+        name: 'Fastq Analyzing',
+        value: [AnalysisStatusEnum.FASTQ_ANALYZING],
+        class: 'analyzing'
+    },
+    {
+        name: 'Vcf Queuing',
+        value: [AnalysisStatusEnum.VCF_QUEUING, AnalysisStatusEnum.VCF_RABBITMQ_QUEUING],
+        class: 'queuing'
+    },
+    {
+        name: 'Vcf Analyzing',
+        value: AnalysisStatusEnum.VCF_ANALYZING,
+        class: 'analyzing'
+    }, 
+    {
+        name: 'Import Queuing',
+        value: AnalysisStatusEnum.IMPORT_QUEUING,
+        class: 'queuing'
+    },
+    {
+        name: 'Import Queuing',
+        value: AnalysisStatusEnum.IMPORTING,
+        class: 'importing'
+    },
+    {
+        name: 'Analyzed',
+        value: AnalysisStatusEnum.ANALYZED,
+        class: 'analyzed'
+    },
+    {
+        name: 'Error',
+        value: AnalysisStatusEnum.ERROR,
+        class: 'error'
+    },
+]
+
 export const ANALYSIS_STATUSES = [
     {
         name: 'Fastq Queuing',
@@ -87,10 +129,16 @@ export const ANALYSIS_STATUSES = [
         name: 'Vcf Analyzing',
         value: AnalysisStatusEnum.VCF_ANALYZING,
         class: 'analyzing'
-    }, {
+    }, 
+    {
         name: 'Import Queuing',
         value: AnalysisStatusEnum.IMPORT_QUEUING,
         class: 'queuing'
+    },
+    {
+        name: 'Importing',
+        value: AnalysisStatusEnum.IMPORTING,
+        class: 'importing'
     },
     {
         name: 'Analyzed',
@@ -102,7 +150,6 @@ export const ANALYSIS_STATUSES = [
         value: AnalysisStatusEnum.ERROR,
         class: 'error'
     },
-
 ]
 
 export const GENDERS = [
@@ -117,5 +164,20 @@ export const GENDERS = [
     {
         name: 'Unknown',
         value: GenderEnum.UNKNOWN
+    }
+]
+
+export const ETHNICITIES = [
+    {
+        name: 'Hispanic or Latino',
+        value: 'H'
+    },
+    {
+        name: 'Not Hispanic or Latino',
+        value: 'N'
+    },
+    {
+        name: 'Unknown',
+        value: 'U'
     }
 ]

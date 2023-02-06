@@ -9,12 +9,12 @@ export interface IPaginatorState {
 
 export class PaginatorState implements IPaginatorState {
     page = 1;
-    pageSize = PageSizes[0];
+    pageSize = PageSizes[1];
     total = 0;
     pageSizes: number[] = [];
 
     constructor(pageSize? : number) {
-        this.pageSize = pageSize ? pageSize : PageSizes[0];
+        this.pageSize = pageSize ? pageSize : PageSizes[1];
     }
 
     recalculatePaginator(total: number): PaginatorState {

@@ -171,7 +171,7 @@
 							</div>
 						</td>
 						<td>
-							<a>{{ sample.name }}</a>
+							<a [routerLink]="['/analysis']"  [queryParams]="{sampleId: sample.id}" href="javascript:void(0)" class="item-name">{{ sample.name }}</a>
 						</td>
 						<td>
 							{{ sample.type | sampleTypeConverter }}
