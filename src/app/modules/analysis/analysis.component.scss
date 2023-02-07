@@ -49,3 +49,7 @@ a.item-name:hover {
 .list-table {
 	max-height: var(--kt-table-max-height);
 }
+
+.select2-selection.select2-selection--multiple {
+    border: 1px solid var(--kt-input-border-color) !important;
+}

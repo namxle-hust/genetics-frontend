@@ -51,5 +51,24 @@ export class AnalysisClassPipe implements PipeTransform {
     }
 }
 
+@Pipe({
+    name: 'formatSelect2Data'
+})
+export class AnalysisFormatSelect2Pipe implements PipeTransform {
+    transform(data: any): Array<{ id: string, text: string }> {
+        if (data && data.length >= 0) {
+            return data.map((element: any) => {
+                return {
+                    id: element.id,
+                    text: element.name
+                }
+            })
+        } else {
+            return []
+        }
+
+    }
+}
+
 
 

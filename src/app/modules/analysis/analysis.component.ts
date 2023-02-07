@@ -20,13 +20,14 @@ import {
     IGroupingView,
     ISearchView
 } from 'src/app/shared/crud-table'
-import { AnalysisService, WorkspaceService } from 'src/app/core/services';
+import { AnalysisService, CommonService, SampleService, WorkspaceService } from 'src/app/core/services';
 import { CreateAnalysisComponent } from './create-analysis/create-analysis.component';
 import { ConfirmModalComponent } from 'src/app/shared/partials/confirm-modal/confirm-modal.component';
 import { ANALYSIS_STATUSES, ANALYSIS_STATUS_FILTER, DEBOUNCE_TIME, VCF_TYPES } from 'src/app/core/constants';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AnalysisStatusEnum, VcfTypeEnum } from 'src/app/core/config';
-import { WorkspaceModel } from 'src/app/core/models';
+import { SampleModel, WorkspaceModel } from 'src/app/core/models';
+import { Select2OptionData } from 'ng-select2';
 
 
 interface IFilter {
@@ -55,6 +56,12 @@ export class AnalysisComponent implements
     IGroupingView,
     ISearchView {
 
+    public options = {
+        width: '100%',
+        multiple: true,
+        tags: true
+    };
+
     paginator: PaginatorState;
     sorting: SortState;
     grouping: GroupingState;
@@ -66,10 +73,13 @@ export class AnalysisComponent implements
     private deleteModal: NgbModalRef;
 
     workspaces$: Observable<WorkspaceModel[]>
+    samples$: Observable<SampleModel[]>
 
     analisysStatusesFilter = ANALYSIS_STATUS_FILTER
 
     vcfTypes = VCF_TYPES
+
+    sampleList: Select2OptionData[] = []
 
     constructor(
         private route: ActivatedRoute,
@@ -77,21 +87,24 @@ export class AnalysisComponent implements
         private modalService: NgbModal,
         public analysisService: AnalysisService,
         private toastr: ToastrService,
+        private commonService: CommonService,
+        private sampleService: SampleService,
         // private cd: ChangeDetectorRef,
         private workspaceService: WorkspaceService
-    ) { 
-        
+    ) {
+
     }
 
     patchParams(params: Params) {
         if (params.sampleId) {
-            this.filterGroup.controls['sampleId'].setValue(params.sampleId);
+            this.filterGroup.controls['sampleId'].setValue([params.sampleId]);
             this.filter();
         }
     }
 
     ngOnInit(): void {
         this.loadWorkspace()
+        this.loadSamples()
 
         this.route.queryParams.subscribe(params => {
             this.filterForm();
@@ -101,8 +114,8 @@ export class AnalysisComponent implements
                 this.patchParams(params)
             }
         })
-        
-    
+
+
         this.grouping = this.analysisService.grouping;
         this.paginator = this.analysisService.paginator;
         this.sorting = this.analysisService.sorting;
@@ -172,9 +185,9 @@ export class AnalysisComponent implements
             filter['workspaceId'] = parseInt(workspaceId);
         }
 
-        const sampleId = this.filterGroup.get('sampleId')?.value;
-        if (sampleId) {
-            filter['sampleId'] = parseInt(sampleId);
+        const sampleIds = this.filterGroup.get('sampleId')?.value;
+        if (sampleIds && sampleIds.length > 0) {
+            filter['sampleId'] = sampleIds.map((sampleId: string) => parseInt(sampleId));
         }
 
         this.analysisService.patchState({ filter });
@@ -222,6 +235,10 @@ export class AnalysisComponent implements
 
     loadWorkspace() {
         this.workspaces$ = this.workspaceService.getWorkspaces()
+    }
+
+    loadSamples() {
+        this.samples$ = this.sampleService.getSamples()
     }
 
     deleteSelected() {

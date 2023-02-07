@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { AnalysisComponent } from './analysis.component';
 import { AnalysisRoutingModule } from './analysis-routing.module';
 import { CreateAnalysisComponent } from './create-analysis/create-analysis.component';
-import { AnalysisAvailablePipe, AnalysisClassPipe, AnalysisStatusConverterPipe, EthnicityConverterPipe, GenderConverterPipe, VariantClassificaitonPipe, VcfTypeConverterPipe } from 'src/app/core/pipes';
+import { AnalysisAvailablePipe, AnalysisClassPipe, AnalysisFormatSelect2Pipe, AnalysisStatusConverterPipe, EthnicityConverterPipe, GenderConverterPipe, VariantClassificaitonPipe, VcfTypeConverterPipe } from 'src/app/core/pipes';
 import { CRUDTableModule } from 'src/app/shared/crud-table';
 import { NgSelect2Module } from 'ng-select2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg-2';
-import { AnalysisService, ReportService, WorkspaceService } from 'src/app/core/services';
+import { AnalysisService, ReportService, SampleService, WorkspaceService } from 'src/app/core/services';
 import { VariantsComponent } from './variants/variants.component';
 import { AnalysisQcComponent } from './analysis-qc/analysis-qc.component';
 import { AnalysisDetailComponent } from './analysis-detail/analysis-detail.component';
@@ -39,7 +39,8 @@ import { ReportComponent } from './report/report.component';
         VariantInformationComponent,
         ReportComponent,
         GenderConverterPipe,
-        EthnicityConverterPipe
+        EthnicityConverterPipe,
+        AnalysisFormatSelect2Pipe
     ],
     imports: [
         CommonModule,
@@ -53,6 +54,6 @@ import { ReportComponent } from './report/report.component';
         InlineSVGModule,
         NgbModalModule
     ],
-    providers: [AnalysisService, ReportService, WorkspaceService]
+    providers: [AnalysisService, ReportService, WorkspaceService, SampleService]
 })
 export class AnalysisModule { }
