@@ -5454,6 +5454,11 @@ ignore@5.2.0, ignore@^5.0.4, ignore@^5.2.0:
   resolved "https://registry.npmjs.org/ignore/-/ignore-5.2.0.tgz"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
 
+igv@^2.13.11:
+  version "2.13.11"
+  resolved "https://registry.yarnpkg.com/igv/-/igv-2.13.11.tgz#0c6d5c7da10cab62e92f615d00ac4c5e8cef7717"
+  integrity sha512-Ts3zRdil1otDEESydl6CJUKlWT+hHqee1tXwNwXisb+hmnlBUqrr7eACzJ2Yyv3/S8Fs7+X+rY1F47tYEKw+YQ==
+
 image-size@~0.5.0:
   version "0.5.5"
   resolved "https://registry.npmjs.org/image-size/-/image-size-0.5.5.tgz"

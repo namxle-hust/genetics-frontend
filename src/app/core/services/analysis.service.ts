@@ -22,4 +22,12 @@ export class AnalysisService extends TableService<AnalysisModel> {
             return of()
         }))
     }
+
+    getIgvUrls(analysisId: number) {
+        const path = `${this.endpoint}/${analysisId}/igv-url`
+        return this.apiService.get(path).pipe(catchError(error => {
+            console.log(error);
+            return of()
+        }))
+    }
 }

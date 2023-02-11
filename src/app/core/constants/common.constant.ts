@@ -83,7 +83,7 @@ export const ANALYSIS_STATUS_FILTER = [
         class: 'queuing'
     },
     {
-        name: 'Import Queuing',
+        name: 'Importing',
         value: AnalysisStatusEnum.IMPORTING,
         class: 'importing'
     },

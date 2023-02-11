@@ -18,6 +18,7 @@ import { VariantListComponent } from './variants/variant-list/variant-list.compo
 import { SafeUrlPipe } from 'src/app/core/pipes';
 import { VariantInformationComponent } from './variants/variant-list/variant-information/variant-information.component';
 import { ReportComponent } from './report/report.component';
+import { IgvModalComponent } from './variants/igv-modal/igv-modal.component';
 
 
 
@@ -40,7 +41,8 @@ import { ReportComponent } from './report/report.component';
         ReportComponent,
         GenderConverterPipe,
         EthnicityConverterPipe,
-        AnalysisFormatSelect2Pipe
+        AnalysisFormatSelect2Pipe,
+        IgvModalComponent
     ],
     imports: [
         CommonModule,

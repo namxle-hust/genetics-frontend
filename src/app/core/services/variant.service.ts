@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { GroupingState, ITableState, PageSizes, PaginatorState, SortState } from 'src/app/shared/crud-table';
 import { TableService } from 'src/app/shared/crud-table/services/table.service';
 import { VariantModel } from '../models';
@@ -52,5 +52,5 @@ export class VariantService extends TableService<VariantModel> {
         };
         this.patchStateWithoutFetch(patchReset);
     }
-    
+
 }

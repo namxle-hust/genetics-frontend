@@ -95,3 +95,8 @@ export interface IVariantFilterSelect2 {
     items?: string[]
     show: boolean
 }
+
+export interface IIgvUrl {
+    bamUrl?: string;
+    indexBamUrl?: string
+}

@@ -72,3 +72,11 @@ $icon-sizes: (
     9x: 9rem,
     10x: 10rem
 );
+
+// Spinner
+$spinner-config: (
+	size: 	1.5rem,
+	size-sm: 1.25rem,
+	size-lg: 2rem
+) !default;
+

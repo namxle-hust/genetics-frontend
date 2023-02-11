@@ -13,12 +13,6 @@
 		class="cursor-default modal-body overflow-auto"
 		style="min-height: 400px; max-height: 550px"
 	>
-		<ng-container *ngIf="isLoading$ | async">
-			<div class="overlay-layer bg-transparent">
-				<div class="spinner spinner-lg spinner-success"></div>
-			</div>
-		</ng-container>
-
 		<ng-container *ngIf="formGroup">
 			<form
 				action="#"
@@ -277,13 +271,15 @@
 				type="submit"
 				class="btn btn-primary btn-elevate"
 				(click)="save()"
-				[disabled]="!formGroup || formGroup.invalid"
+				[disabled]="(isLoading$ | async) || !formGroup || formGroup.invalid"
 			>
 				Save
 			</button>
 		</ng-container>
-		<!-- <ng-container *ngIf="isLoading">
-			<span class="spinner spinner-primary ml-3 mr-5"></span>
-		</ng-container> -->
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-transparent me-3">
+                <div class="spinner spinner-md spinner-success"></div>
+            </div>
+        </ng-container>
 	</div>
 </div>

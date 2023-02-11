@@ -37,15 +37,15 @@
 </ng-container> -->
 
 <div class="table-responsive variant-list-table">
-    <!-- begin::Table -->
-    <table
-        class="table table-row-dashed table-head-custom table-row-gray-300 align-middle gs-0 gy-4"
-    >
-        <!-- begin::Table head -->
-        <thead>
-            <tr class="fw-bolder text-muted">
-                <th class="w-25px">
-                    <!-- <div
+	<!-- begin::Table -->
+	<table
+		class="table table-row-dashed table-head-custom table-row-gray-300 align-middle gs-0 gy-4"
+	>
+		<!-- begin::Table head -->
+		<thead>
+			<tr class="fw-bolder text-muted">
+				<th class="w-25px">
+					<!-- <div
                         class="form-check form-check-sm form-check-custom form-check-solid"
                     >
                         <input
@@ -55,83 +55,105 @@
                             [checked]="grouping.checkAreAllRowsSelected()"
                         />
                     </div> -->
-                </th>
-                <th class="min-w-150px">
-                    Gene
-                    <br>
-                    Transcript
-                    <!-- <app-sort-icon
+				</th>
+				<th class="min-w-150px">
+					Gene
+					<br />
+					Transcript
+					<!-- <app-sort-icon
                         column="gene"
                         class="mr-3"
                         [activeColumn]="sorting.column"
                         [activeDirection]="sorting.direction"
                         (sort)="sort($event)"
                     ></app-sort-icon> -->
-                </th>
-                <th class="min-w-150px">Position<br>RSID</th>
-                <th class="min-w-150px">Change</th>
-                <th class="min-w-100px">Coverage</th>
-                <!-- <th class="min-w-100px">Function</th> -->
-                <th class="min-w-100px">Location</th>
-                <th class="min-w-100px">ClinVar</th>
-                <th class="min-w-150px" class="text-center" style="color: var(--kt-primary)">Classification</th>
-                <th class="min-w-100px">Cosmic</th>
-                
-            </tr>
-        </thead>
-        <!-- end::Table head -->
-        <!-- begin::Table body -->
-        <tbody>
-            <tr *ngFor="let variant of variantService.items$ | async">
-                <td style="padding-left: 10px;">
-                    <div
-                        class="form-check form-check-sm form-check-custom form-check-solid"
-                    >
-                        <input
-                            class="form-check-input widget-9-check"
-                            type="checkbox"
-                            (click)="grouping.selectRow(variant.id)"
-                            [checked]="grouping.isRowSelected(variant.id)"
-                        />
-                    </div>
-                </td>
-                <td>
-                    <a href="javascript:void(0)">{{ variant.gene }}</a><br>
-                    <a href="javascript:void(0)">{{ variant.transcript_id }}</a>
-                </td>
-                <td>
-                    {{ variant.chrom }}:{{ variant.position }}<br>
-                    {{ variant.rsid }}
-                </td>
-                <td style="width: 150px;">
-                    <span class="d-block w-150px">{{ variant.REF }} > {{ variant.ALT }}</span>
-                    <span class="d-block w-150px">{{ variant.cnomen }}</span>
-                    {{ variant.pnomen }}
-                </td>
-                <td>
-                    {{ variant.coverage }}
-                </td>
-                <td>
-                    {{ variant.function }}
-                </td>
-                <!-- <td>
+				</th>
+				<th class="min-w-150px">Position<br />RSID</th>
+				<th class="min-w-150px">Change</th>
+				<th class="min-w-100px">Coverage</th>
+				<!-- <th class="min-w-100px">Function</th> -->
+				<th class="min-w-100px">Location</th>
+				<th class="min-w-100px">ClinVar</th>
+				<th
+					class="min-w-150px"
+					class="text-center"
+					style="color: var(--kt-primary)"
+				>
+					Classification
+				</th>
+				<th class="min-w-100px">Cosmic</th>
+			</tr>
+		</thead>
+		<!-- end::Table head -->
+		<!-- begin::Table body -->
+		<tbody>
+			<tr *ngFor="let variant of variantService.items$ | async">
+				<td style="padding-left: 10px">
+					<div
+						class="form-check form-check-sm form-check-custom form-check-solid"
+					>
+						<input
+							class="form-check-input widget-9-check"
+							type="checkbox"
+							(click)="grouping.selectRow(variant.id)"
+							[checked]="grouping.isRowSelected(variant.id)"
+						/>
+					</div>
+				</td>
+				<td>
+					<a href="javascript:void(0)">{{ variant.gene }}</a
+					><br />
+					<a href="javascript:void(0)">{{ variant.transcript_id }}</a>
+				</td>
+				<td>
+					<a
+						href="javascript:void(0)"
+						(click)="getIgvInfo(variant.chrom, variant.position)"
+					>
+						{{ variant.chrom }}:{{ variant.position }}</a
+					><br />
+					<a
+						target="_blank"
+						href="https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?type=rs&rs={{
+							variant.rsid
+						}}"
+					>
+						{{ variant.rsid }}
+					</a>
+				</td>
+				<td style="width: 150px">
+					<span class="d-block w-150px"
+						>{{ variant.REF }} > {{ variant.ALT }}</span
+					>
+					<span class="d-block w-150px">{{ variant.cnomen }}</span>
+					{{ variant.pnomen }}
+				</td>
+				<td>
+					{{ variant.coverage }}
+				</td>
+				<td>
+					{{ variant.function }}
+				</td>
+				<!-- <td>
                     {{ variant.location }}
                 </td> -->
-                <td>
-                    {{ variant.clinvar }}
-                </td>
-                <td class="text-center">
-                    <span class="badge classification py-3 px-4 fs-8" [class]="variant.classification | variantClassification">
-                        {{ variant.classification }}
-                    </span>
-                </td>
-                <td>
-                    {{ variant.cosmicID }}
-                </td>
-                
-            </tr>
-        </tbody>
-        <!-- end::Table body -->
-    </table>
-    <!-- end::Table -->
+				<td>
+					{{ variant.clinvar }}
+				</td>
+				<td class="text-center">
+					<span
+						class="badge classification py-3 px-4 fs-8"
+						[class]="variant.classification | variantClassification"
+					>
+						{{ variant.classification }}
+					</span>
+				</td>
+				<td>
+					{{ variant.cosmicID }}
+				</td>
+			</tr>
+		</tbody>
+		<!-- end::Table body -->
+	</table>
+	<!-- end::Table -->
 </div>
