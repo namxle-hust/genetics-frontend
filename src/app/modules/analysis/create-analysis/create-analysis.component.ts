@@ -5,9 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { SampleModel, AnalysisModel, WorkspaceModel } from 'src/app/core/models';
 import { AnalysisService, SampleService, WorkspaceService } from 'src/app/core/services';
-import { GenderEnum, VcfTypeEnum,  } from 'src/app/core/config';
+import { GenderEnum, VcfTypeEnum, } from 'src/app/core/config';
 import { VCF_TYPES, GENDERS } from 'src/app/core/constants';
- 
+
 @Component({
     selector: 'app-create-analysis',
     templateUrl: './create-analysis.component.html',
@@ -61,17 +61,18 @@ export class CreateAnalysisComponent implements OnInit, OnDestroy, AfterViewChec
 
 
     ngAfterViewChecked(): void {
-       
+
     }
 
     loadData() {
         if (!this.id) {
             this.loadForm();
         } else {
+            this.loadFormEdit();
             const sb = this.analysisService.getItemById(this.id).subscribe((analysis: AnalysisModel | undefined) => {
                 if (analysis) {
                     this.analysis = analysis;
-                    this.loadFormEdit();
+                    this.updateFormEdit();
                 } else {
                     this.modal.dismiss();
                 }
@@ -94,10 +95,19 @@ export class CreateAnalysisComponent implements OnInit, OnDestroy, AfterViewChec
         this.subscriptions.push(sb);
     }
 
+    updateFormEdit(): void {
+        this.formGroup.setValue(
+            {
+                name: this.analysis.name,
+                description: this.analysis.description
+            }
+        )
+    }
+
     loadFormEdit(): void {
         this.formGroup = this.fb.group({
-            name: [this.analysis.name, Validators.compose([Validators.required, Validators.maxLength(100)])],
-            description: [this.analysis.description, Validators.compose([Validators.maxLength(1000)])]
+            name: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            description: [null, Validators.compose([Validators.maxLength(1000)])]
         })
     }
 
@@ -109,7 +119,7 @@ export class CreateAnalysisComponent implements OnInit, OnDestroy, AfterViewChec
             sample: [null, Validators.compose([Validators.required])],
             description: ['', Validators.compose([Validators.maxLength(1000)])],
             gender: [null, Validators.compose([Validators.required])]
-            
+
 
         });
         if (!this.id) {

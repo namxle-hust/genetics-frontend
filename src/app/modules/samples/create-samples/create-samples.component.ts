@@ -112,10 +112,11 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
         if (!this.id) {
             this.loadForm();
         } else {
+            this.loadFormEdit()
             const sb = this.sampleService.getItemById(this.id).subscribe((sample: SampleModel | undefined) => {
                 if (sample) {
                     this.sample = sample;
-                    this.loadFormEdit();
+                    this.updateFormEdit();
                 } else {
                     this.modal.dismiss();
                 }
@@ -124,14 +125,25 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
         }
     }
 
+    updateFormEdit() {
+        this.formGroup.setValue({
+            name: this.sample.name,
+            firstName: this.sample.firstName,
+            lastName: this.sample.lastName,
+            dob: this.sample.dob,
+            ethnicity: this.sample.ethnicity,
+            gender: this.sample.gender
+        })
+    }
+
     loadFormEdit(): void {
         this.formGroup = this.fb.group({
-            name: [this.sample.name, Validators.compose([Validators.required, Validators.maxLength(100)])],
-            firstName: [this.sample.firstName, Validators.compose([Validators.required, Validators.maxLength(100)])],
-            lastName: [this.sample.lastName, Validators.compose([Validators.required, Validators.maxLength(100)])],
-            dob: [this.sample.dob, Validators.compose([Validators.nullValidator, Validators.required, dobRangeValidator])],
-            ethnicity: [this.sample.ethnicity, Validators.required],
-            gender: [this.sample.gender, Validators.required]
+            name: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            firstName: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            lastName: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
+            dob: [null, Validators.compose([Validators.nullValidator, Validators.required, dobRangeValidator])],
+            ethnicity: [null, Validators.required],
+            gender: [null, Validators.required]
 
         })
     }
