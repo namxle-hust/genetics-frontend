@@ -97,7 +97,7 @@
 								disabled
 								class="form-control form-control-lg form-control-solid"
 								name="name"
-								value="{{ sample.type | sampleTypeConverter }}"
+								value="{{ sample ? (sample.type | sampleTypeConverter) : '' }}"
 							/>
 						</div>
 					</ng-template>

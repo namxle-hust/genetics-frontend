@@ -165,7 +165,7 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
     }
 
     get SelectedSampleType(): SampleTypeEnum {
-        return this.formGroup.value.type
+        return this.formGroup.value?.type
     }
 
     edit() {
@@ -251,7 +251,7 @@ export class CreateSamplesComponent implements OnInit, OnDestroy, AfterViewCheck
 
 function dobRangeValidator(control: AbstractControl): { [key: string]: boolean } | null {
     let dob = control.value;
-    console.log(dob);
+    // console.log(dob);
     if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dob)) {
         return { 'dobInvalid': true };
     }
