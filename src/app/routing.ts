@@ -15,7 +15,7 @@ const Routing: Routes = [
     },
     {
         canActivate: [AuthGuard],
-        path: 'pipeline',
+        path: 'reference',
         loadChildren: () =>
             import('./modules/pipeline/pipeline.module').then((m) => m.PipelineModule)
     },
