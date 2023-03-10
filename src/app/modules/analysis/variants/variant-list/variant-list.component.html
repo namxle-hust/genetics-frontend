@@ -73,6 +73,13 @@
 				<th class="min-w-100px">Coverage</th>
 				<!-- <th class="min-w-100px">Function</th> -->
 				<th class="min-w-100px">Location</th>
+                <th class="min-w-100px">
+                    gAD_ALL
+                    <br>
+                    gAD_SAS
+                    <br>
+                    gAD_EAS
+                </th>
 				<th class="min-w-100px">ClinVar</th>
 				<th
 					class="min-w-150px"
@@ -81,7 +88,8 @@
 				>
 					Classification
 				</th>
-				<th class="min-w-100px">Cosmic</th>
+                
+				<!-- <th class="min-w-100px">Cosmic</th> -->
 			</tr>
 		</thead>
 		<!-- end::Table head -->
@@ -101,7 +109,7 @@
 					</div>
 				</td>
 				<td>
-					<a href="javascript:void(0)">{{ variant.gene }}</a
+					<a href="javascript:void(0)" (click)="openGeneDetail(variant.id, variant.gene)">{{ variant.gene }}</a
 					><br />
 					<a href="javascript:void(0)">{{ variant.transcript_id }}</a>
 				</td>
@@ -137,9 +145,16 @@
 				<!-- <td>
                     {{ variant.location }}
                 </td> -->
+                <td style="width: 120px;">
+                    {{ variant.gnomADe_ALL }}<br>
+                    {{variant.gnomADe_AMR }}<br>
+                    {{variant.gnomADe_EAS}}
+                </td>
 				<td>
-					{{ variant.clinvar }}
+                    
+                    <a *ngIf="variant.clinvar != '.'" target="_blank" href="https://www.ncbi.nlm.nih.gov/clinvar/variation/{{ variant.clinvar }}">{{ variant.clinvar }}</a>
 				</td>
+                
 				<td class="text-center">
 					<span
 						class="badge classification py-3 px-4 fs-8"
@@ -148,9 +163,9 @@
 						{{ variant.classification }}
 					</span>
 				</td>
-				<td>
+				<!-- <td>
 					{{ variant.cosmicID }}
-				</td>
+				</td> -->
 			</tr>
 		</tbody>
 		<!-- end::Table body -->

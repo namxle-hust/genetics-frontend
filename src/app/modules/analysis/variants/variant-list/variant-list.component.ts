@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { IIgvUrl, VariantModel } from 'src/app/core/models';
 import { AnalysisService, VariantService } from 'src/app/core/services';
 import { GroupingState, SortState } from 'src/app/shared/crud-table';
+import { GeneDetailModalComponent } from '../gene-detail-modal/gene-detail-modal.component';
 import { IgvModalComponent } from '../igv-modal/igv-modal.component';
 
 @Component({
@@ -16,6 +17,7 @@ export class VariantListComponent implements OnInit, OnDestroy {
 
     @Input() sorting: SortState
     @Input() grouping: GroupingState
+    @Input() analysisId: number
 
     @Output() sortEvent = new EventEmitter<string>()
 
@@ -41,6 +43,20 @@ export class VariantListComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(sb => sb.unsubscribe)
         this.variantService.patchStateReset()
         this.analysisService.patchStateReset()
+    }
+
+
+    openGeneDetail(variantId: string, geneName: string) {
+        const modalRef = this.modalService.open(GeneDetailModalComponent, { size: 'lg' });
+        modalRef.componentInstance.variantId = variantId;
+        modalRef.componentInstance.geneName = geneName;
+        modalRef.componentInstance.analysisId = this.analysisId;
+
+
+        modalRef.result.then(
+            () => { },
+            () => { },
+        );
     }
 
     getIgvInfo(chrom: string, position: number) {

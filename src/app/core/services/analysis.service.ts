@@ -30,4 +30,20 @@ export class AnalysisService extends TableService<AnalysisModel> {
             return of()
         }))
     }
+
+    getVariantsInfo(variantId: string, analysisId: number) {
+        const path = `${this.endpoint}/${analysisId}/variant-detail/${variantId}`;
+        return this.apiService.get(path).pipe(catchError(error => {
+            console.log(error);
+            return of()
+        }))
+    }
+
+    getGeneInfo(geneName: string) {
+        const path = `${this.endpoint}/gene-detail/${geneName}`;
+        return this.apiService.get(path).pipe(catchError(error => {
+            console.log(error);
+            return of()
+        }))
+    }
 }

@@ -1,0 +1,40 @@
+:host::ng-deep {
+	.modal-header .closebtn {
+		margin-top: -2px;
+		cursor: pointer;
+	}
+
+	body>[uib-modal-window]:not([modal-render]) {
+		display: none !important;
+	}
+
+	button.closebtn {
+		padding: 0;
+		cursor: pointer;
+		background: 0 0;
+		border: 0;
+	}
+
+	.closebtn {
+		float: right;
+		font-size: 21px;
+		font-weight: 700;
+		line-height: 1;
+		color: #000;
+		text-shadow: 0 1px 0 #fff;
+		filter: alpha(opacity=20);
+		opacity: .2;
+	}
+}
+
+.variant-list-table {
+	border: 1px solid #dee2e6;
+	// padding: 0px 10px;
+	border-radius: 5px;
+    scrollbar-width: none;
+
+    a:hover {
+    color: var(--kt-primary);
+}
+
+}

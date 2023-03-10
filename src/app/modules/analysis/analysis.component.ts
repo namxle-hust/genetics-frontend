@@ -98,7 +98,14 @@ export class AnalysisComponent implements
     patchParams(params: Params) {
         if (params.sampleId) {
             this.filterGroup.controls['sampleId'].setValue([params.sampleId]);
-            this.filter();
+        }
+
+        if (params.workspaceId) {
+            this.filterGroup.controls['workspaceId'].setValue([params.workspaceId]);
+        }
+
+        if (params.sampleId || params.workspaceId) {
+            this.filter()
         }
     }
 
@@ -277,7 +284,37 @@ export class AnalysisComponent implements
 
 
     delete(id: number) {
+        this.deleteModal = this.modalService.open(ConfirmModalComponent, { size: 'md' });
 
+        this.deleteModal.componentInstance.confirmButtonTitle = 'Delete';
+        this.deleteModal.componentInstance.modalTitle = 'Delete Analyses';
+        this.deleteModal.componentInstance.confirmQuestion = 'Are you sure to delete this analysis';
+        this.deleteModal.componentInstance.executingMessage = 'Deleting...';
+
+        const sbIsSubmit = this.deleteModal.componentInstance.isDelete$.subscribe((value: boolean) => {
+            if (value) {
+                console.log("Deleting")
+                // this.deleteModal.close();
+                this.deleteModal.componentInstance.isLoadingSubject.next(true);
+                const sb = this.analysisService.deleteItems([id]).subscribe((value) => {
+                    if (value) {
+                        this.deleteModal.close();
+                    }
+                })
+                this.subscriptions.push(sb);
+            }
+        })
+
+        this.deleteModal.closed.subscribe(() => {
+            sbIsSubmit.unsubscribe();
+        })
+
+        this.deleteModal.result.then(() =>
+            this.analysisService.fetch(),
+            () => {
+                this.analysisService.fetch()
+            }
+        );
     }
 
     fetchSelected() {

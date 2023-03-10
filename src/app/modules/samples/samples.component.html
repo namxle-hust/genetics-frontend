@@ -208,10 +208,11 @@
 									></span>
 								</a>
 								<a
-									href="#"
+                                    href="javascript:void(0)"
 									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
 								>
 									<span
+                                        (click)="delete(sample.id)"
 										[inlineSVG]="
 											'./assets/media/icons/duotune/general/gen027.svg'
 										"

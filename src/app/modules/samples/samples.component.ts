@@ -196,7 +196,37 @@ export class SamplesComponent implements
 
 
     delete(id: number) {
-       
+        this.deleteModal = this.modalService.open(ConfirmModalComponent, { size: 'md' });
+
+        this.deleteModal.componentInstance.confirmButtonTitle = 'Delete';
+        this.deleteModal.componentInstance.modalTitle = 'Delete Sample';
+        this.deleteModal.componentInstance.confirmQuestion = 'Are you sure to delete this sample';
+        this.deleteModal.componentInstance.executingMessage = 'Deleting...';
+        
+        const sbIsSubmit = this.deleteModal.componentInstance.isDelete$.subscribe((value: boolean) => {
+            if (value) {
+                console.log("Deleting")
+                // this.deleteModal.close();
+                this.deleteModal.componentInstance.isLoadingSubject.next(true);
+                const sb = this.sampleService.deleteItems([id]).subscribe((value) => {
+                    if (value) {
+                        this.deleteModal.close();
+                    }
+                })
+                this.subscriptions.push(sb);
+            }
+        })
+
+        this.deleteModal.closed.subscribe(() => {
+            sbIsSubmit.unsubscribe();
+        })
+
+        this.deleteModal.result.then(() =>
+            this.sampleService.fetch(),
+            () => { 
+                this.sampleService.fetch()
+            }
+        );
     }
 
     fetchSelected() {

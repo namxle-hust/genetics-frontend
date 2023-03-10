@@ -19,6 +19,7 @@ import { SafeUrlPipe } from 'src/app/core/pipes';
 import { VariantInformationComponent } from './variants/variant-list/variant-information/variant-information.component';
 import { ReportComponent } from './report/report.component';
 import { IgvModalComponent } from './variants/igv-modal/igv-modal.component';
+import { GeneDetailModalComponent } from './variants/gene-detail-modal/gene-detail-modal.component';
 
 
 
@@ -42,7 +43,8 @@ import { IgvModalComponent } from './variants/igv-modal/igv-modal.component';
         GenderConverterPipe,
         EthnicityConverterPipe,
         AnalysisFormatSelect2Pipe,
-        IgvModalComponent
+        IgvModalComponent,
+        GeneDetailModalComponent
     ],
     imports: [
         CommonModule,

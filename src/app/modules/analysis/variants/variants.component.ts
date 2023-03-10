@@ -50,7 +50,7 @@ export class VariantsComponent implements
     filterGroup: FormGroup;
     searchGroup: FormGroup;
 
-    private analysisId: number;
+    public analysisId: number;
 
     private subscriptions: Subscription[] = []
 

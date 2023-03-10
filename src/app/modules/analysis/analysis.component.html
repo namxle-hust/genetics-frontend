@@ -179,6 +179,7 @@
 								(sort)="sort($event)"
 							></app-sort-icon>
 						</th>
+						<th class="text-center min-w-100px">Total Variants</th>
 						<th class="text-center min-w-150px">Status</th>
 						<th class="w-120px text-center">Actions</th>
 					</tr>
@@ -216,6 +217,9 @@
 						<td>
 							{{ analysis.createdAt }}
 						</td>
+                        <td class="text-center">
+                            {{ analysis.totalVariants ? analysis.totalVariants : "" }}
+                        </td>
 						<td class="text-center analysis-status">
 							<span [class]="analysis.status | analysisClass">
 								{{ analysis.status | analysisStatusConverter }}
@@ -252,6 +256,7 @@
 									class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
 								>
 									<span
+                                        (click)="delete(analysis.id)"
 										[inlineSVG]="
 											'./assets/media/icons/duotune/general/gen027.svg'
 										"

@@ -100,3 +100,13 @@ export interface IIgvUrl {
     bamUrl?: string;
     indexBamUrl?: string
 }
+
+export interface IGeneDetail {
+    name?: string
+    full_name?: string
+    summary?: string
+    GHR_summary?: string
+    GHR_metadata?: string
+    NCBI_summary?: string
+    NCBI_metadata?: string
+}

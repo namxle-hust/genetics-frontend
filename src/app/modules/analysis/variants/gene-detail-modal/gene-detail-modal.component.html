@@ -1,0 +1,124 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<div class="modal-title h4" id="example-modal-sizes-title-lg">
+			Variant & Gene Information
+		</div>
+		<button
+			type="button"
+			class="closebtn"
+			(click)="modal.close()"
+			aria-hidden="true"
+		>
+			<span aria-hidden="true">×</span>
+		</button>
+	</div>
+	<div
+		class="overlay cursor-default modal-body overflow-y-scroll"
+		style="height: 550px; width: 100%"
+	>
+		<div class="align-items-start flex-column mb-5">
+			<div
+				class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-600 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold fs-5 my-5 my-lg-0 align-items-stretch"
+				id="#kt_analysis_details_menu"
+				data-kt-menu="true"
+			>
+				<!-- Workspace -->
+				<div *ngFor="let tab of tabs" class="menu-item me-lg-3">
+					<a
+						(click)="changeTab(tab.id)"
+						class="menu-link py-3"
+						[ngClass]="{ active: tab.isSelected }"
+						><span class="menu-title">{{ tab.name }}</span></a
+					>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div *ngIf="currentTabID == tabList.GENE">
+				<div class="ms-2 my-10" *ngIf="geneData$ | async as geneData">
+					<div class="row">
+						<div class="col-lg-3">Gene Name:</div>
+						<div class="col-lg-9">
+							{{ geneData?.full_name }}
+						</div>
+					</div>
+					<div class="row mt-5">
+						<div class="col-lg-3">Synonyms:</div>
+						<div class="col-lg-9">
+							{{ geneData?.name }}
+						</div>
+					</div>
+					<div class="row mt-5">
+						<div class="col-lg-3">Gene function:</div>
+						<div class="col-lg-9">
+							{{
+								geneData?.NCBI_summary
+									? geneData?.NCBI_summary
+									: geneData?.summary
+							}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="currentTabID == tabList.VARIANT">
+				<div
+					class="ms-2 my-10"
+					*ngIf="variantData$ | async as variantData"
+				>
+					<div class="table-responsive variant-list-table p-4">
+						<!-- begin::Table -->
+						<table
+							class="table table-row-dashed table-head-custom table-row-gray-300 align-middle gs-0 gy-4"
+						>
+							<!-- begin::Table head -->
+							<thead>
+								<tr class="fw-bolder text-muted">
+									<th class="w-150px">Population</th>
+									<th>gnomAD Exomes</th>
+									<th>gnomAD Genomes</th>
+									<th>1000g</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>African</td>
+									<td>{{ variantData.gnomADe_AFR }}</td>
+									<td>{{ variantData.gnomAD_genome_AFR }}</td>
+									<td>{{ variantData["1000g_AFR_AF"] }}</td>
+								</tr>
+								<tr>
+									<td>American</td>
+									<td>{{ variantData.gnomADe_AMR }}</td>
+									<td>{{ variantData.gnomAD_genome_AMR }}</td>
+									<td>{{ variantData["1000g_AMR_AF"] }}</td>
+								</tr>
+								<tr>
+									<td>East Asian</td>
+									<td>{{ variantData.gnomADe_EAS }}</td>
+									<td>{{ variantData.gnomAD_genome_EAS }}</td>
+									<td>{{ variantData["1000g_EAS_AF"] }}</td>
+								</tr>
+								<tr>
+									<td>South Asian</td>
+									<td>{{ variantData.gnomADe_SAS }}</td>
+									<td>{{ variantData.gnomAD_genome_SAS }}</td>
+									<td>{{ variantData["1000g_SAS_AF"] }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button
+			type="button"
+			class="btn btn-light btn-elevate mr-2"
+			(click)="modal.close()"
+		>
+			Close
+		</button>
+	</div>
+</div>
